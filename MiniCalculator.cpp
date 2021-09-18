@@ -48,12 +48,21 @@ int main()
             flag.erase(0, flag.find_first_not_of(' '));
             flag.erase(flag.find_last_not_of(' ') + 1);
 
+            if (!Utils::CheckName(flag))
+            {
+                Utils::PrintException(IllegalVarNameException(0), flag);
+                continue;
+            }
+
             string content = input.substr(equal_pos + 1, input.length());
+
+            content.erase(0, content.find_first_not_of(' '));
+            content.erase(content.find_last_not_of(' ') + 1);
 
             try
             {
                 // 语义解析
-                if (content.at(content.find_last_not_of(' ')) == '\'')
+                if (content.at(content.length() - 1) == '\'')
                 {
                     content = content.erase(content.find_last_of('\''));
                     auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();

@@ -69,6 +69,14 @@ namespace MiniCalculator
 	public:
 		UnexpectedNumberException(int pos) : Exception("Unexpected Number", pos) {}
 	};
+
+	/// <summary>
+	/// 非法变量名
+	/// </summary>
+	class IllegalVarNameException : public Exception {
+	public:
+		IllegalVarNameException(int pos) : Exception("Illegal Variable Name", pos) {}
+	};
 }
 
 

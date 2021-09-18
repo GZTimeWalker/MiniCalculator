@@ -64,5 +64,11 @@ namespace MiniCalculator
         /// <param name="e">异常</param>
         /// <param name="source">源字符串</param>
         static void PrintException(Exception e, std::string source);
+        /// <summary>
+        /// 检查变量名
+        /// </summary>
+        /// <param name="var">变量名称</param>
+        /// <returns>是否可用</returns>
+        static bool CheckName(std::string var);
     };
 }

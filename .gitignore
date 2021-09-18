@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+Report/**
+/.VSCodeCounter/2021-09-18_22-09-55

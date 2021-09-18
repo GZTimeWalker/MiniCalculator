@@ -173,5 +173,18 @@ namespace MiniCalculator
 
 		PrintLine("\n", Color::WHITE);
 	}
+
+	bool Utils::CheckName(std::string var)
+	{
+		bool allDigit = true;
+		for (auto& chr : var)
+			allDigit = allDigit && isdigit(chr);
+
+		if (allDigit)
+			return false;
+
+		if (var.length() == 1 && (var[0] == 'x' || var[0] == 'X'))
+			return false;
+	}
 }
 

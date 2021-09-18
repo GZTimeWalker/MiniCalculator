@@ -53,11 +53,24 @@ int main()
             try
             {
                 // 语义解析
-                auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
-                auto res = vars->insert(make_pair(flag, expr));
-                if (!res.second)
-                    (*res.first).second = expr;
-                continue;
+                if (content.at(content.find_last_not_of(' ')) == '\'')
+                {
+                    content = content.erase(content.find_last_of('\''));
+                    auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
+                    expr = expr->Eval().Derivative().AsExpr();
+                    auto res = vars->insert(make_pair(flag, expr));
+                    if (!res.second)
+                        (*res.first).second = expr;
+                    continue;
+                }
+                else
+                {
+                    auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
+                    auto res = vars->insert(make_pair(flag, expr));
+                    if (!res.second)
+                        (*res.first).second = expr;
+                    continue;
+                }
             }
             catch (Exception e)
             {

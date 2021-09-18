@@ -1,12 +1,12 @@
-#include "Polyomial.h"
-#include "Lexer.h"
-
 #include <iostream>
 #include <string>
+#include <iomanip>
+
 #include "Expr.h"
+#include "Polyomial.h"
+#include "Lexer.h"
 #include "Parser.h"
 #include "Utils.h"
-#include <iomanip>
 
 using namespace std;
 
@@ -58,14 +58,18 @@ namespace MiniCalculator
 
 		static void DoParserTest()
 		{
-			string input = "2*3+4x^2+(2+3x^1)-6+6(3x-6x^3)";
+			string _input = "f = 2*3+4x^2+(2+3x^1)-6+6(3x-6x^3)";
+
+			int equal_pos = _input.find('=');
+			string flag = _input.substr(0, equal_pos);
+			string input = _input.substr(equal_pos + 1, input.length());
 
 			auto tokens = Lexer(input).GetTokens();
 
 			for (auto& item : tokens)
 				cout << "pos: " << item.Start << "\t with " << item.GetValue(input) << endl;
 
-			auto ast = Parser(tokens, input).GenExpr();
+			auto ast = Parser(tokens, input, nullptr).GenExpr();
 
 			cout << "f(x) = " << ast->Eval() << endl;
 			cout << "f(1) = " << ast->Eval(1) << endl;
@@ -76,11 +80,11 @@ namespace MiniCalculator
 		{
 			string input = "1+x^5";
 
-			auto ast = Parser(Lexer(input).GetTokens(), input).GenExpr();
+			auto ast = Parser(Lexer(input).GetTokens(), input, nullptr).GenExpr();
 
 			input = "x+1";
 
-			auto ast1 = Parser(Lexer(input).GetTokens(), input).GenExpr();
+			auto ast1 = Parser(Lexer(input).GetTokens(), input, nullptr).GenExpr();
 
 			cout << "f(x) = " << ast->Eval() << endl;
 			cout << "g(x) = " << ast1->Eval() << endl;
@@ -99,7 +103,7 @@ namespace MiniCalculator
 
 					getline(cin, input);
 
-					auto ast = Parser(Lexer(input).GetTokens(), input).GenExpr();
+					auto ast = Parser(Lexer(input).GetTokens(), input, nullptr).GenExpr();
 
 					cout << "Your input: f(x) = " << ast->Eval() << endl;
 
@@ -109,7 +113,7 @@ namespace MiniCalculator
 						cin >> x;
 						cout << "f(" << x << ") = " << setiosflags(ios::fixed) << setprecision(2) << ast->Eval(x) << endl;
 					}
-					getchar();
+					char c = getchar();
 				}
 				catch (Exception e)
 				{

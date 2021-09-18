@@ -1,5 +1,7 @@
 #include "Parser.h"
 #include "Exception.h"
+#include "Utils.h"
+
 #include <memory>
 
 namespace MiniCalculator
@@ -53,6 +55,16 @@ namespace MiniCalculator
                 throw UnexpectedNumberException(token.Start);
             }
         }
+        else if (Peek(TokenType::VAR))
+        {
+            auto token = Match(TokenType::VAR);
+            auto iter = Vars->find(token.GetValue(Source));
+
+            if(iter == Vars->end())
+                throw UnexpectedExpressionException((*Current).Start);
+
+            return Vars->at(token.GetValue(Source));
+        }
         if (Current == End)
             throw UnexpectedEOFException();
         throw UnexpectedExpressionException((*Current).Start);
@@ -105,12 +117,14 @@ namespace MiniCalculator
         return ret;
     }
 
-    Parser::Parser(const std::vector<Token>& tokens, std::string& source)
+
+    Parser::Parser(const std::vector<Token>& tokens, std::string& source, std::map<std::string, std::shared_ptr<Expr>>* vars)
     {
         Begin = tokens.cbegin();
         End = tokens.cend();
         Current = tokens.cbegin();
         Source = source;
+        Vars = vars;
     }
 
     std::shared_ptr<Expr> Parser::GenExpr()

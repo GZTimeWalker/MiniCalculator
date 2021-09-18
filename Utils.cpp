@@ -26,8 +26,8 @@ namespace MiniCalculator
 		};
 		for (auto& str : strs)
 			PrintLine(str);
-		PrintLine("Type 'help' for help.", Color::GREEN);
-		SetColor(Color::WHITE);
+
+		PrintLine("\n  Type 'help' for help.\n", Color::WHITE);
 	}
 
 	void Utils::Print(std::string msg)
@@ -39,6 +39,11 @@ namespace MiniCalculator
 	{
 		SetColor(color);
 		std::cout << msg;
+	}
+
+	void Utils::PrintHelp()
+	{
+		return;
 	}
 
 	void Utils::PrintLine(std::string msg)

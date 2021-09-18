@@ -34,6 +34,10 @@ namespace MiniCalculator
 		/// </summary>
 		STAR,
 		/// <summary>
+		/// ╠Да©
+		/// </summary>
+		VAR,
+		/// <summary>
 		/// ©у
 		/// </summary>
 		NONE,

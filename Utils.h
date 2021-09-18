@@ -3,7 +3,9 @@
 
 #include <Windows.h>
 #include <string>
+#include <map>
 #include "Exception.h"
+#include "Expr.h"
 
 namespace MiniCalculator
 {
@@ -49,6 +51,8 @@ namespace MiniCalculator
 
         static void Print(std::string msg);
         static void Print(std::string msg, Color color);
+
+        static void PrintHelp();
 
         static void PrintLine(std::string msg);
         static void PrintLine(std::string msg, Color color);

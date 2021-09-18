@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include "Lexer.h"
+#include "Exception.h"
 
 namespace MiniCalculator
 {
@@ -85,12 +86,18 @@ namespace MiniCalculator
 
 		if (Match('*'))
 			return Token(TokenType::STAR, Current - 1, Current);
-		
+
 		// match monomial
 		unsigned int start = Current;
 
 		if (!Match({ 'x' , 'x' }))
 		{
+			if (Match(isalpha))
+			{
+				while (Match(isalpha));
+				return Token(TokenType::VAR, start, Current);
+			}
+
 			while (Match(isdigit));
 
 			// match float

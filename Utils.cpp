@@ -11,7 +11,7 @@ namespace MiniCalculator
 	void Utils::Init()
 	{
 		SetColor(Color::BLUE);
-		std::string strs[] = {
+		const char* strs[] = {
 			"========================================================================================",
 			"  ______             __                      __              __                         ",
 			" /      \\           /  |                    /  |            /  |                        ",
@@ -68,7 +68,49 @@ namespace MiniCalculator
 
 	void Utils::PrintHelp()
 	{
+		PrintLine("\nMiniCalculator Version 1.0\n", Color::YELLOW);
+		SetColor(Color::WHITE);
+		const char* strs[] = {
+			"Usage: [Command] or [Variable] = [Expression] | [Number]\n",
+			"help:",
+			"  Get helps.\n",
+			"exit:",
+			"  Exit this program.\n",
+			"Usage Example:\n",
+		};
+		for (auto& str : strs)
+			PrintLine(str);
+
+		SetColor(Color::CYAN);
+		const char* _strs[] = {
+			" > f = 4x^3 + 3 - 5x(x + 5 - x^2)",
+			" > g = (x + 1)(x - 1) + 6x - 4",
+			" > a = (x + 2)",
+			" > h = f + g(a) + 4x - 5",
+			" > h",
+			" | h = 9.00 - 11.00x - 4.00x^2 + 9.00x^3",
+			" > h(3)",
+			" | h(3) = 183.00",
+			" > h(a)",
+			" | h(a) = 43.00 + 81.00x + 50.00x^2 + 9.00x^3",
+			" > f'",
+			" | f' = - 25.00 - 10.00x + 27.00x^2",
+			" > s = g(g(a))",
+			" > s",
+			" | s = 182.00 + 280.00x + 128.00x^2 + 20.00x^3 + x^4",
+			" > u = s(x^2)",
+			" > u",
+			" | u = 182.00 + 280.00x^2 + 128.00x^4 + 20.00x^6 + x^8"
+		};
+		for (auto& str : _strs)
+			PrintLine(str);
+
 		return;
+	}
+
+	void Utils::PrintLine(const char* msg)
+	{
+		std::cout << msg << std::endl;
 	}
 
 	void Utils::PrintLine(std::string msg)
@@ -97,18 +139,18 @@ namespace MiniCalculator
 		if (e.pos < 0)
 			pos = end;
 
-		if (pos - 7 < end)
+		if (pos - 15 < end)
 		{
-			begin = pos - 7;
+			begin = pos - 15;
 			rpos = pos - begin;
 			msg += "...";
 		}
 		else
 			msg += "   ";
 
-		if (pos + 8 < end)
+		if (pos + 15 < end)
 		{
-			end = pos + 8;
+			end = pos + 15;
 			msg += source.substr(begin, end - begin);
 			msg += "...";
 		}

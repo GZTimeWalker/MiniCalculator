@@ -73,6 +73,16 @@ int main()
             continue;
         }
 
+        int d_pos = input.find('\'');
+        if (d_pos != input.npos)
+        {
+            flag = input.substr(0, d_pos);
+            auto flag_iter = vars->find(flag);
+            if (flag_iter != vars->end())
+                cout << " | " << input << " = " << (*flag_iter).second->Eval().Derivative() << endl;
+            continue;
+        }
+
         int paren_lpos = input.find('(');
         int paren_rpos = input.find(')');
 

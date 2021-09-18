@@ -56,6 +56,7 @@ namespace MiniCalculator
         static void PrintHelp();
 
         static void PrintLine(std::string msg);
+        static void PrintLine(const char* msg);
         static void PrintLine(std::string msg, Color color);
         static void PrintException(Exception e, std::string source);
     };

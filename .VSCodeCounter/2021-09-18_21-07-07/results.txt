@@ -1,0 +1,52 @@
+Date : 2021-09-18 21:07:07
+Directory : g:\Projects\[Mine]\MiniCalculator
+Total : 19 files,  1225663 codes, 192 comments, 13093 blanks, all 1238948 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Database |          1 |  1,224,332 |          0 |     12,821 |  1,237,153 |
+| C++      |         14 |      1,122 |        192 |        270 |      1,584 |
+| XML      |          1 |        164 |          0 |          0 |        164 |
+| log      |          2 |         29 |          0 |          2 |         31 |
+| JSON     |          1 |         16 |          0 |          0 |         16 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                          | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                             |         19 |  1,225,663 |        192 |     13,093 |  1,238,948 |
+| .vs                                                                           |          2 |  1,224,348 |          0 |     12,821 |  1,237,169 |
+| .vs\MiniCalculator                                                            |          2 |  1,224,348 |          0 |     12,821 |  1,237,169 |
+| .vs\MiniCalculator\v17                                                        |          1 |  1,224,332 |          0 |     12,821 |  1,237,153 |
+| .vs\MiniCalculator\v17\Preview                                                |          1 |  1,224,332 |          0 |     12,821 |  1,237,153 |
+| Debug                                                                         |          2 |         29 |          0 |          2 |         31 |
++-------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                      | language | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| g:\Projects\[Mine]\MiniCalculator\.vs\MiniCalculator\project-colors.json      | JSON     |         16 |          0 |          0 |         16 |
+| g:\Projects\[Mine]\MiniCalculator\.vs\MiniCalculator\v17\Preview\Browse.VC.db | Database |  1,224,332 |          0 |     12,821 |  1,237,153 |
+| g:\Projects\[Mine]\MiniCalculator\Debug\MiniCalculator.Build.CppClean.log     | log      |         18 |          0 |          1 |         19 |
+| g:\Projects\[Mine]\MiniCalculator\Debug\MiniCalculator.log                    | log      |         11 |          0 |          1 |         12 |
+| g:\Projects\[Mine]\MiniCalculator\Exception.h                                 | C++      |         39 |          0 |         12 |         51 |
+| g:\Projects\[Mine]\MiniCalculator\Expr.cpp                                    | C++      |        166 |          0 |         29 |        195 |
+| g:\Projects\[Mine]\MiniCalculator\Expr.h                                      | C++      |         71 |        135 |         17 |        223 |
+| g:\Projects\[Mine]\MiniCalculator\Lexer.cpp                                   | C++      |         94 |          7 |         29 |        130 |
+| g:\Projects\[Mine]\MiniCalculator\Lexer.h                                     | C++      |         25 |          0 |          4 |         29 |
+| g:\Projects\[Mine]\MiniCalculator\MiniCalculator.cpp                          | C++      |         93 |          1 |         26 |        120 |
+| g:\Projects\[Mine]\MiniCalculator\MiniCalculator.vcxproj                      | XML      |        164 |          0 |          0 |        164 |
+| g:\Projects\[Mine]\MiniCalculator\Parser.cpp                                  | C++      |        132 |          0 |         23 |        155 |
+| g:\Projects\[Mine]\MiniCalculator\Parser.h                                    | C++      |         28 |         12 |         10 |         50 |
+| g:\Projects\[Mine]\MiniCalculator\Polyomial.cpp                               | C++      |        161 |          0 |         44 |        205 |
+| g:\Projects\[Mine]\MiniCalculator\Polyomial.h                                 | C++      |         30 |          0 |          7 |         37 |
+| g:\Projects\[Mine]\MiniCalculator\Test.cpp                                    | C++      |         99 |          0 |         26 |        125 |
+| g:\Projects\[Mine]\MiniCalculator\Token.h                                     | C++      |         30 |         27 |          8 |         65 |
+| g:\Projects\[Mine]\MiniCalculator\Utils.cpp                                   | C++      |        113 |          0 |         23 |        136 |
+| g:\Projects\[Mine]\MiniCalculator\Utils.h                                     | C++      |         41 |         10 |         12 |         63 |
+| Total                                                                         |          |  1,225,663 |        192 |     13,093 |  1,238,948 |
++-------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

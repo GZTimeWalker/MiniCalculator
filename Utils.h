@@ -5,11 +5,11 @@
 #include <string>
 #include <map>
 #include "Exception.h"
-#include "Expr.h"
 
 namespace MiniCalculator
 {
 
+    enum class TokenType;
     /// <summary>
     /// An enumeration of available colors.
     /// </summary>

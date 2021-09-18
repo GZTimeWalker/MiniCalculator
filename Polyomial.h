@@ -3,10 +3,11 @@
 #include <map>
 #include <string>
 #include <ostream>
-#include "Expr.h"
+
 
 namespace MiniCalculator
 {
+	class Expr;
 	class Polyomial
 	{
 	private:

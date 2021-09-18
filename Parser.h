@@ -1,12 +1,14 @@
 #pragma once
 
-#include "Token.h"
 #include <string>
 #include <vector>
-#include "Expr.h"
+
+#include "Token.h"
+
 
 namespace MiniCalculator
 {
+	class Expr;
 	class Parser
 	{
 	private:

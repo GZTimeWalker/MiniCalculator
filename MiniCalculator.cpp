@@ -1,7 +1,9 @@
 ﻿#include <iostream>
 #include <string>
 #include <map>
+
 #include "Parser.h"
+#include "Expr.h"
 #include "Test.cpp"
 
 using namespace MiniCalculator;

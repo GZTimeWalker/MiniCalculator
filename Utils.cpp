@@ -1,4 +1,5 @@
 #include "Utils.h"
+#include "Token.h"
 
 namespace MiniCalculator
 {
@@ -122,7 +123,7 @@ namespace MiniCalculator
 			rpos = source.length();
 
 		msg += " At   ";
-		for (int i = 0; i < rpos; ++i)
+		for (unsigned int i = 0; i < rpos; ++i)
 			msg += " ";
 		msg += "^ Here";
 

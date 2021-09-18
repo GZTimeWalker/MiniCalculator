@@ -1,4 +1,5 @@
 #include "Polyomial.h"
+#include "Expr.h"
 #include <iomanip>
 #include <vector>
 
@@ -38,7 +39,7 @@ namespace MiniCalculator {
 	shared_ptr<Expr> Polyomial::AsExpr()
 	{
 		auto cur = ExpFactorMap.begin();
-		auto expr = make_shared<MonomialExpr>((*cur).second, (*cur).first);
+		shared_ptr<Expr> expr = make_shared<MonomialExpr>((*cur).second, (*cur).first);
 
 		while (++cur != ExpFactorMap.end())
 		{

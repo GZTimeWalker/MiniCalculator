@@ -2,6 +2,7 @@
 
 #include <string>
 #include <map>
+#include "Utils.h"
 
 namespace MiniCalculator
 {

@@ -29,9 +29,9 @@ namespace MiniCalculator
 		Polyomial(std::map<int, double>& data);
 
 		/// <summary>
-		/// 从多项式构造语法树
+		/// 从多项式构造表达式语法树
 		/// </summary>
-		/// <returns>语法树</returns>
+		/// <returns>表达式语法树</returns>
 		std::shared_ptr<Expr> AsExpr();
 		/// <summary>
 		/// 多项式求导

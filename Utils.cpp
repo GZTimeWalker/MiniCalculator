@@ -185,6 +185,12 @@ namespace MiniCalculator
 
 		if (var.length() == 1 && (var[0] == 'x' || var[0] == 'X'))
 			return false;
+
+		bool pass = true;
+		for (auto& chr : var)
+			pass = pass && isalpha(chr);
+
+		return pass;
 	}
 }
 

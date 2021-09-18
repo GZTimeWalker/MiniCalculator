@@ -20,9 +20,10 @@ namespace MiniCalculator
 		Token Match();
 		Token Match(TokenType type);
 		bool Peek(TokenType type);
+		bool Peek(TokenType type, TokenType next);
 
 		/// <summary>
-		/// => MonomialExpr | GroupingExpr
+		/// => MonomialExpr | GroupingExpr | Expr ( Expr )
 		/// </summary>
 		std::shared_ptr<Expr> GetBaseExpr();
 		/// <summary>

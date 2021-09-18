@@ -67,7 +67,7 @@ namespace MiniCalculator
 		unsigned int begin = 0;
 		unsigned int end = source.length();
 
-		std::string msg = "  > ";
+		std::string msg = " > ";
 
 		if (e.pos < 0)
 			pos = end;
@@ -97,7 +97,7 @@ namespace MiniCalculator
 		if (e.pos == -1)
 			rpos = source.length();
 
-		msg += " At    ";
+		msg += " At   ";
 		for (int i = 0; i < rpos; ++i)
 			msg += " ";
 		msg += "^ Here";

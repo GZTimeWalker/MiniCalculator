@@ -106,6 +106,43 @@ namespace MiniCalculator
 	};
 
 	/// <summary>
+	/// 复合表达式
+	/// </summary>
+	class CompoundExpr : public Expr
+	{
+	private:
+		/// <summary>
+		/// 基表达式
+		/// </summary>
+		std::shared_ptr<Expr> Base;
+
+		/// <summary>
+		/// 待复合表达式
+		/// </summary>
+		std::shared_ptr<Expr> Compound;
+
+	public:
+		CompoundExpr(std::shared_ptr<Expr> base, std::shared_ptr<Expr> compound) : Base(base), Compound(compound) {}
+		/// <summary>
+		/// 计算表达式
+		/// </summary>
+		/// <returns>返回多项式</returns>
+		Polyomial Eval() override;
+		/// <summary>
+		/// 带入自变量计算多项式
+		/// </summary>
+		/// <param name="x">自变量</param>
+		/// <returns>多项式的值</returns>
+		double Eval(double x) override;
+		/// <summary>
+		/// 计算表达式
+		/// </summary>
+		/// <param name="poly">多项式</param>
+		/// <returns>返回多项式</returns>
+		Polyomial Eval(Polyomial poly) override;
+	};
+
+	/// <summary>
 	/// 一元表达式
 	/// </summary>
 	class UnaryExpr : public Expr

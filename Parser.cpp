@@ -34,6 +34,13 @@ namespace MiniCalculator
         return (*Current).Type == type;
     }
 
+    bool Parser::Peek(TokenType type, TokenType next)
+    {
+        if (Current + 1 >= End)
+            return false;
+        return (*Current).Type == type && (*(Current + 1)).Type == next;
+    }
+
     std::shared_ptr<Expr> Parser::GetBaseExpr()
     {
         if (Peek(TokenType::LEFT_PAREN))
@@ -54,6 +61,20 @@ namespace MiniCalculator
             {
                 throw UnexpectedNumberException(token.Start);
             }
+        }
+        else if (Peek(TokenType::VAR, TokenType::LEFT_PAREN))
+        {
+            auto token = Match(TokenType::VAR);
+            auto iter = Vars->find(token.GetValue(Source));
+
+            if (iter == Vars->end())
+                throw UnexpectedExpressionException((*Current).Start);
+
+            Match(TokenType::LEFT_PAREN);
+            auto expr = GetPlusExpr();
+            Match(TokenType::RIGHT_PAREN);
+
+            return std::make_shared<CompoundExpr>((*iter).second, expr);
         }
         else if (Peek(TokenType::VAR))
         {
@@ -116,7 +137,6 @@ namespace MiniCalculator
         }
         return ret;
     }
-
 
     Parser::Parser(const std::vector<Token>& tokens, std::string& source, std::map<std::string, std::shared_ptr<Expr>>* vars)
     {

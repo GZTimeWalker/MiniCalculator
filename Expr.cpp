@@ -6,6 +6,10 @@ using namespace std;
 
 namespace MiniCalculator
 {
+	Expr Expr::Simplify()
+	{
+		return Expr();
+	}
 	Polyomial Expr::Eval()
 	{
 		return Polyomial();
@@ -171,5 +175,20 @@ namespace MiniCalculator
 		default:
 			throw SyntaxException(Operator.Start);
 		}
+	}
+
+	Polyomial CompoundExpr::Eval()
+	{
+		return Base->Eval(Compound->Eval());
+	}
+
+	double CompoundExpr::Eval(double x)
+	{
+		return Base->Eval(Compound->Eval(x));
+	}
+
+	Polyomial CompoundExpr::Eval(Polyomial poly)
+	{
+		return Base->Eval(Compound->Eval(poly));
 	}
 }

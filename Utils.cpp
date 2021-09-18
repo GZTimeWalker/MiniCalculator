@@ -68,7 +68,9 @@ namespace MiniCalculator
 
 	void Utils::PrintHelp()
 	{
-		PrintLine("\nMiniCalculator Version 1.0\n", Color::YELLOW);
+		PrintLine("\nMiniCalculator Version 1.0", Color::YELLOW);
+		PrintLine("\n   By GZTime 2021.09.19\n");
+		
 		SetColor(Color::WHITE);
 		const char* strs[] = {
 			"Usage: [Command] or [Variable] = [Expression] | [Number]\n",
@@ -104,7 +106,9 @@ namespace MiniCalculator
 		};
 		for (auto& str : _strs)
 			PrintLine(str);
-
+		
+		PrintLine("\n");
+		
 		return;
 	}
 

@@ -20,6 +20,7 @@ int main()
     int equal_pos = -1;
     double x;
     
+    // main loop
     while (true)
     {
         Utils::Print(" > ", Color::YELLOW);
@@ -37,12 +38,13 @@ int main()
         if (input == "exit")
             break;
 
+        // 赋值语句
         equal_pos = input.find('=');
         if (equal_pos != input.npos)
         {
             flag = input.substr(0, equal_pos);
 
-            // trim
+            // Trim
             flag.erase(0, flag.find_first_not_of(' '));
             flag.erase(flag.find_last_not_of(' ') + 1);
 
@@ -50,6 +52,7 @@ int main()
 
             try
             {
+                // 语义解析
                 auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
                 auto res = vars->insert(make_pair(flag, expr));
                 if (!res.second)
@@ -66,6 +69,7 @@ int main()
             }
         }
 
+        // 输出变量表达式
         auto iter = vars->find(input);
         if (iter != vars->end())
         {
@@ -73,6 +77,7 @@ int main()
             continue;
         }
 
+        // 变量表达式求导
         int d_pos = input.find('\'');
         if (d_pos != input.npos)
         {
@@ -83,6 +88,7 @@ int main()
             continue;
         }
 
+        // 变量表达式代入求值
         int paren_lpos = input.find('(');
         int paren_rpos = input.find(')');
 
@@ -97,6 +103,7 @@ int main()
             if (flag_iter == vars->end())
                 continue;
 
+            // 复合函数
             if (param_iter != vars->end())
             {
                 cout << " | " << input << " = " << (*flag_iter).second->Eval((*param_iter).second->Eval()) << endl;
@@ -105,6 +112,7 @@ int main()
 
             try
             {
+                // 输入数字
                 x = stod(param);
                 cout << " | " << input << " = " << (*flag_iter).second->Eval(x) << endl;
                 continue;

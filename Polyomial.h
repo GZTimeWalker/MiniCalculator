@@ -8,10 +8,19 @@
 namespace MiniCalculator
 {
 	class Expr;
+	/// <summary>
+	/// 多项式
+	/// </summary>
 	class Polyomial
 	{
 	private:
+		/// <summary>
+		/// 指数和系数的映射
+		/// </summary>
 		std::map<int, double> ExpFactorMap;
+		/// <summary>
+		/// 移除无用指数（系数为0）
+		/// </summary>
 		void Clean();
 
 	public:
@@ -19,7 +28,15 @@ namespace MiniCalculator
 		Polyomial(const Polyomial& other);
 		Polyomial(std::map<int, double>& data);
 
+		/// <summary>
+		/// 从多项式构造语法树
+		/// </summary>
+		/// <returns>语法树</returns>
 		std::shared_ptr<Expr> AsExpr();
+		/// <summary>
+		/// 多项式求导
+		/// </summary>
+		/// <returns></returns>
 		Polyomial Derivative();
 
 		Polyomial& operator+=(const Polyomial& other);

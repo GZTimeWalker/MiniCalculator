@@ -5,10 +5,19 @@
 
 namespace MiniCalculator
 {
+	/// <summary>
+	/// 异常基类
+	/// </summary>
 	class Exception
 	{
 	public:
+		/// <summary>
+		/// 异常发生的位置
+		/// </summary>
 		int pos;
+		/// <summary>
+		/// 异常的相关描述
+		/// </summary>
 		std::string descr;
 
 	public:
@@ -21,26 +30,41 @@ namespace MiniCalculator
 		}
 	};
 
+	/// <summary>
+	/// 语法错误
+	/// </summary>
 	class SyntaxException : public Exception {
 	public:
 		SyntaxException(int pos): Exception("Syntax Exception", pos) {}
 	};
 
+	/// <summary>
+	/// 意料之外的 Token
+	/// </summary>
 	class UnexpectedTokenException : public Exception {
 	public:
 		UnexpectedTokenException(int pos) : Exception("Unexpected Token", pos) {}
 	};
 
+	/// <summary>
+	/// 意料之外的终止
+	/// </summary>
 	class UnexpectedEOFException : public Exception {
 	public:
 		UnexpectedEOFException() : Exception("Unexpected EOF", -1) {}
 	};
 
+	/// <summary>
+	/// 意料之外的表达式
+	/// </summary>
 	class UnexpectedExpressionException : public Exception {
 	public:
 		UnexpectedExpressionException(int pos) : Exception("Unexpected Expression", pos) {}
 	};
 
+	/// <summary>
+	/// 意料之外的数字格式
+	/// </summary>
 	class UnexpectedNumberException : public Exception {
 	public:
 		UnexpectedNumberException(int pos) : Exception("Unexpected Number", pos) {}

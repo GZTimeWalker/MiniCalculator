@@ -69,7 +69,7 @@ namespace MiniCalculator
             auto iter = Vars->find(token.GetValue(Source));
 
             if (iter == Vars->end())
-                throw UnexpectedExpressionException((*Current).Start);
+                throw UnexpectedExpressionException(token.Start);
 
             Match(TokenType::LEFT_PAREN);
             auto expr = GetPlusExpr();
@@ -83,7 +83,7 @@ namespace MiniCalculator
             auto iter = Vars->find(token.GetValue(Source));
 
             if(iter == Vars->end())
-                throw UnexpectedExpressionException((*Current).Start);
+                throw UnexpectedExpressionException(token.Start);
 
             return Vars->at(token.GetValue(Source));
         }

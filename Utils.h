@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <Windows.h>
 #include <string>
 #include <map>
@@ -11,7 +10,7 @@ namespace MiniCalculator
 
     enum class TokenType;
     /// <summary>
-    /// An enumeration of available colors.
+    /// 颜色枚举
     /// </summary>
     enum class Color : int
     {
@@ -35,16 +34,16 @@ namespace MiniCalculator
     };
 
     /// <summary>
-    /// Utils class.
+    /// 工具类
     /// </summary>
     class Utils
     {
     public:
 
         /// <summary>
-        /// Sets the output text color.
+        /// 设置输出颜色
         /// </summary>
-        /// <param name="color">color enumeration value</param>
+        /// <param name="color">颜色枚举值</param>
         static void SetColor(Color color);
 
         static void Init();

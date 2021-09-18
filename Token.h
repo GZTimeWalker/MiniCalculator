@@ -46,8 +46,17 @@ namespace MiniCalculator
 
 	class Token {
 	public:
+		/// <summary>
+		/// 起始位置
+		/// </summary>
 		unsigned int Start;
+		/// <summary>
+		/// 结束位置
+		/// </summary>
 		unsigned int End;
+		/// <summary>
+		/// Token类型
+		/// </summary>
 		TokenType Type;
 
 		std::string GetValue(std::string& source) {

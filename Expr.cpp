@@ -6,10 +6,11 @@ using namespace std;
 
 namespace MiniCalculator
 {
-	Expr Expr::Simplify()
+	shared_ptr<Expr> Expr::Simplify()
 	{
-		return Expr();
+		return Eval().AsExpr();
 	}
+
 	Polyomial Expr::Eval()
 	{
 		return Polyomial();

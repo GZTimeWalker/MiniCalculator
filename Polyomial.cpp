@@ -35,6 +35,20 @@ namespace MiniCalculator {
 		ExpFactorMap = data;
 	}
 
+	shared_ptr<Expr> Polyomial::AsExpr()
+	{
+		auto cur = ExpFactorMap.begin();
+		auto expr = make_shared<MonomialExpr>((*cur).second, (*cur).first);
+
+		while (++cur != ExpFactorMap.end())
+		{
+			auto rhs = make_shared<MonomialExpr>((*cur).second, (*cur).first);
+			expr = make_shared<BinaryExpr>(expr, Token(TokenType::PLUS, 0, 0), rhs);
+		}
+
+		return expr;
+	}
+
 	Polyomial Polyomial::Derivative()
 	{
 		Polyomial result;

@@ -13,6 +13,11 @@ namespace MiniCalculator
 	{
 	public:
 		/// <summary>
+		/// 化简表达式
+		/// </summary>
+		std::shared_ptr<Expr> Simplify();
+
+		/// <summary>
 		/// 计算表达式
 		/// </summary>
 		/// <returns>返回多项式</returns>

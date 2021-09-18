@@ -48,7 +48,7 @@ int main()
 
             try
             {
-                auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr();
+                auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
                 auto res = vars->insert(make_pair(flag, expr));
                 if (!res.second)
                     (*res.first).second = expr;

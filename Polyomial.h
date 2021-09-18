@@ -3,6 +3,7 @@
 #include <map>
 #include <string>
 #include <ostream>
+#include "Expr.h"
 
 namespace MiniCalculator
 {
@@ -17,6 +18,7 @@ namespace MiniCalculator
 		Polyomial(const Polyomial& other);
 		Polyomial(std::map<int, double>& data);
 
+		std::shared_ptr<Expr> AsExpr();
 		Polyomial Derivative();
 
 		Polyomial& operator+=(const Polyomial& other);

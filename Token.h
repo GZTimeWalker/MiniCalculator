@@ -54,29 +54,7 @@ namespace MiniCalculator
 		}
 
 		std::string GetValueWithType(std::string& source) {
-			return source.substr(Start, End - Start) + "\t (" + GetTypeString() + ")";
-		}
-
-		std::string GetTypeString()
-		{
-			switch (Type)
-			{
-			case MiniCalculator::TokenType::LEFT_PAREN:
-				return "Left Paren";
-			case MiniCalculator::TokenType::RIGHT_PAREN:
-				return "Right Paren";
-			case MiniCalculator::TokenType::MONOMIAL:
-				return "Monomial";
-			case MiniCalculator::TokenType::PLUS:
-				return "Plus";
-			case MiniCalculator::TokenType::MINUS:
-				return "Minus";
-			case MiniCalculator::TokenType::STAR:
-				return "Star";
-			case MiniCalculator::TokenType::NONE:
-			default:
-				return "Unknown";
-			}
+			return source.substr(Start, End - Start) + "\t (" + Utils::GetTypeString(Type) + ")";
 		}
 
 		Token(TokenType type, unsigned int start, unsigned int end) :  Start(start), End(end), Type(type){}

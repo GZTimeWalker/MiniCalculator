@@ -48,6 +48,7 @@ namespace MiniCalculator
         static void SetColor(Color color);
 
         static void Init();
+        static std::string GetTypeString(TokenType type);
 
         static void Print(std::string msg);
         static void Print(std::string msg, Color color);

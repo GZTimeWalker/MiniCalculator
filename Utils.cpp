@@ -30,6 +30,30 @@ namespace MiniCalculator
 		PrintLine("\n  Type 'help' for help.\n", Color::WHITE);
 	}
 
+	std::string Utils::GetTypeString(TokenType type)
+	{
+		switch (type)
+		{
+		case MiniCalculator::TokenType::LEFT_PAREN:
+			return "Left Paren";
+		case MiniCalculator::TokenType::RIGHT_PAREN:
+			return "Right Paren";
+		case MiniCalculator::TokenType::MONOMIAL:
+			return "Monomial";
+		case MiniCalculator::TokenType::PLUS:
+			return "Plus";
+		case MiniCalculator::TokenType::MINUS:
+			return "Minus";
+		case MiniCalculator::TokenType::STAR:
+			return "Star";
+		case MiniCalculator::TokenType::VAR:
+			return "Variable";
+		case MiniCalculator::TokenType::NONE:
+		default:
+			return "Unknown";
+		}
+	}
+
 	void Utils::Print(std::string msg)
 	{
 		std::cout << msg;

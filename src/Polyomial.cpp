@@ -76,12 +76,15 @@ namespace MiniCalculator {
 	Polyomial Polyomial::Derivative()
 	{
 		Polyomial result;
+		
+		if (PFMap.size() == 1 && (*(PFMap.begin())).first == 0)
+			return Polyomial(0);
 
 		for (auto& item : PFMap)
 			if(item.first != 0)
 				result.PFMap[item.first - 1] = item.second * item.first;
 
-		Clean();
+		result.Clean();
 		return result;
 	}
 

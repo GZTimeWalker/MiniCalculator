@@ -25,11 +25,11 @@ namespace MiniCalculator
 		/// <summary>
 		/// 当前位置
 		/// </summary>
-		unsigned int Current;
+		size_t Current;
 		/// <summary>
 		/// 字符串长度
 		/// </summary>
-		unsigned int Length;
+		size_t Length;
 		/// <summary>
 		/// 匹配一个字符
 		/// </summary>

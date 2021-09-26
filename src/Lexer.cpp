@@ -112,7 +112,7 @@ namespace MiniCalculator
 		{
 			while (Match(isdigit) || Match('.'));
 			
-			if(Current == start && Source[start] == '.')
+			if(Current - start == 1 && Source[start] == '.')
 				throw UnexpectedNumberException(start);
 
 			return Token(TokenType::NUMBER, start, Current);

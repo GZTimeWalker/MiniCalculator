@@ -4,7 +4,8 @@
 
 #include "Parser.h"
 #include "Expr.h"
-#include "Test.cpp"
+#include "Lexer.h"
+// #include "Test.cpp"
 
 using namespace MiniCalculator;
 using namespace std;
@@ -61,25 +62,11 @@ int main()
 
             try
             {
-                // 语义解析
-                if (content.at(content.length() - 1) == '\'')
-                {
-                    content = content.erase(content.find_last_of('\''));
-                    auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
-                    expr = expr->Eval().Derivative().AsExpr();
-                    auto res = vars->insert(make_pair(flag, expr));
-                    if (!res.second)
-                        (*res.first).second = expr;
-                    continue;
-                }
-                else
-                {
-                    auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
-                    auto res = vars->insert(make_pair(flag, expr));
-                    if (!res.second)
-                        (*res.first).second = expr;
-                    continue;
-                }
+                auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
+                auto res = vars->insert(make_pair(flag, expr));
+                if (!res.second)
+                    (*res.first).second = expr;
+                continue;
             }
             catch (Exception e)
             {
@@ -99,21 +86,9 @@ int main()
 
             try
             {
-                // 语义解析
-                if (content.at(content.length() - 1) == '\'')
-                {
-                    content = content.erase(content.find_last_of('\''));
-                    auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
-                    expr = expr->Eval().Derivative().AsExpr();
-                    Utils::PrintExpr(expr, content);
-                    continue;
-                }
-                else
-                {
-                    auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
-                    Utils::PrintExpr(expr, content);
-                    continue;
-                }
+                auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
+                Utils::PrintExpr(expr, content);
+                continue;
             }
             catch (Exception e)
             {
@@ -124,62 +99,6 @@ int main()
                 Utils::PrintException(Exception("Unknown Exception.", 0), content);
             }
         }
-
-        /*
-        // 输出变量表达式
-        auto iter = vars->find(input);
-        if (iter != vars->end())
-        {
-            cout << " | " << (*iter).first << " = " << (*iter).second->Eval() << endl;
-            continue;
-        }
-
-        // 变量表达式求导
-        int d_pos = input.find('\'');
-        if (d_pos != input.npos)
-        {
-            flag = input.substr(0, d_pos);
-            auto flag_iter = vars->find(flag);
-            if (flag_iter != vars->end())
-                cout << " | " << input << " = " << (*flag_iter).second->Eval().Derivative() << endl;
-            continue;
-        }
-
-        // 变量表达式代入求值
-        int paren_lpos = input.find('(');
-        int paren_rpos = input.find(')');
-
-        if (paren_lpos != input.npos && paren_rpos != input.npos && paren_rpos > paren_lpos)
-        {
-            flag = input.substr(0, paren_lpos);
-            param = input.substr(paren_lpos + 1, paren_rpos - paren_lpos - 1);
-
-            auto flag_iter = vars->find(flag);
-            auto param_iter = vars->find(param);
-
-            if (flag_iter == vars->end())
-                continue;
-
-            // 复合函数
-            if (param_iter != vars->end())
-            {
-                cout << " | " << input << " = " << (*flag_iter).second->Eval((*param_iter).second->Eval()) << endl;
-                continue;
-            }
-
-            try
-            {
-                // 输入数字
-                x = stod(param);
-                cout << " | " << input << " = " << (*flag_iter).second->Eval(x) << endl;
-                continue;
-            }
-            catch (...)
-            {
-                Utils::PrintException(UnexpectedNumberException(0), param);
-            }
-        }
-        */
     }
 
     delete vars;

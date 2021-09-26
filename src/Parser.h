@@ -61,29 +61,31 @@ namespace MiniCalculator
 		/// <param name="next">下一位Token类型</param>
 		/// <returns>是否匹配</returns>
 		bool Peek(TokenType type, TokenType next);
-
-		bool Peek(TokenType type, TokenType next, TokenType _next);
-
-		bool Peek(TokenType type, TokenType next, TokenType _next, TokenType __next);
+		bool Peek(TokenType type, TokenType next, TokenType next1);
+		bool Peek(TokenType type, TokenType next, TokenType next1, TokenType next2);
 
 		/// <summary>
-		/// => MonomialExpr | GroupingExpr | Expr ( Expr )
+		/// => MonomialExpr | GroupingExpr | Expr ( Expr ) | Number
 		/// </summary>
 		std::shared_ptr<Expr> GetBaseExpr();
 		/// <summary>
-		/// => UnaryExpr (-, +)
+		/// => DerivativeExpr Expr '
+		/// </summary>
+		std::shared_ptr<Expr> GetDerivativeExpr();
+		/// <summary>
+		/// => UnaryExpr (- | +) Expr
 		/// </summary>
 		std::shared_ptr<Expr> GetUnaryExpr();
 		/// <summary>
-		/// => PowExpr (^)
+		/// => PowExpr Expr ^ Expr
 		/// </summary>
 		std::shared_ptr<Expr> GetPowExpr();
 		/// <summary>
-		/// => BinaryExpr (*, nothing, /)
+		/// => BinaryExpr Expr (* | / | none) Expr
 		/// </summary>
 		std::shared_ptr<Expr> GetMutiExpr();
 		/// <summary>
-		/// => BinaryExpr (+, -)
+		/// => BinaryExpr Expr (+ | -) Expr
 		/// </summary>
 		std::shared_ptr<Expr> GetPlusExpr();
 

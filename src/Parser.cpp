@@ -148,16 +148,31 @@ namespace MiniCalculator
         throw UnexpectedExpressionException((*Current).Start);
     }
 
+    std::shared_ptr<Expr> Parser::GetDerivativeExpr()
+    {
+        auto ret = GetBaseExpr();
+        while (Peek(TokenType::RSQUO))
+        {
+            Token _operator = Match();
+            ret = std::make_shared<DerivativeExpr>(ret);
+        }
+        return ret;
+    }
+
     std::shared_ptr<Expr> Parser::GetUnaryExpr()
     {
         Token op = Token(TokenType::NONE, 0, 0);
+        bool after = true;
 
         if (Peek(TokenType::MINUS))
             op = Match(TokenType::MINUS);
         else if (Peek(TokenType::PLUS))
             op = Match(TokenType::PLUS);
 
-        auto expr = GetBaseExpr();
+        auto expr = GetDerivativeExpr();
+
+        if (Peek(TokenType::RSQUO))
+            op = Match(TokenType::RSQUO);
 
         if (op.Type == TokenType::NONE)
             return expr;

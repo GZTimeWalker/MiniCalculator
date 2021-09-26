@@ -247,6 +247,37 @@ namespace MiniCalculator
 		/// <returns>返回多项式</returns>
 		Polyomial Eval(Polyomial poly) override;
 	};
+
+	/// <summary>
+	/// 求导表达式
+	/// </summary>
+	class DerivativeExpr : public Expr
+	{
+	private:
+		/// <summary>
+		/// 表达式
+		/// </summary>
+		std::shared_ptr<Expr> Expression;
+	public:
+		DerivativeExpr(std::shared_ptr<Expr> expr) : Expression(expr) {}
+		/// <summary>
+		/// 计算表达式
+		/// </summary>
+		/// <returns>返回多项式</returns>
+		Polyomial Eval() override;
+		/// <summary>
+		/// 带入自变量计算多项式
+		/// </summary>
+		/// <param name="x">自变量</param>
+		/// <returns>多项式的值</returns>
+		long double Eval(long double x) override;
+		/// <summary>
+		/// 计算表达式
+		/// </summary>
+		/// <param name="poly">多项式</param>
+		/// <returns>返回多项式</returns>
+		Polyomial Eval(Polyomial poly) override;
+	};
 }
 
 

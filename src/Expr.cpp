@@ -42,7 +42,7 @@ namespace MiniCalculator
 	long double UnaryExpr::Eval(long double x)
 	{
 		long double val = Right->Eval(x);
-		
+
 		switch (Operator.Type)
 		{
 		case TokenType::MINUS:
@@ -189,7 +189,7 @@ namespace MiniCalculator
 		case TokenType::STAR:
 			return left * right;
 		case TokenType::SLASH:
-		    _right = right.AsNum();
+			_right = right.AsNum();
 			return left / _right;
 		case TokenType::TIP:
 			_right = right.AsNum();
@@ -213,16 +213,34 @@ namespace MiniCalculator
 	{
 		return Base->Eval(Compound->Eval(poly));
 	}
+
 	Polyomial NumberExpr::Eval()
 	{
 		return Polyomial(Number);
 	}
+
 	long double NumberExpr::Eval(long double x)
 	{
 		return Number;
 	}
+
 	Polyomial NumberExpr::Eval(Polyomial poly)
 	{
 		return Polyomial(Number);
+	}
+
+	Polyomial DerivativeExpr::Eval()
+	{
+		return Expression->Eval().Derivative();
+	}
+
+	long double DerivativeExpr::Eval(long double x)
+	{
+		return Expression->Eval().Derivative().AsExpr()->Eval(x);
+	}
+
+	Polyomial DerivativeExpr::Eval(Polyomial poly)
+	{
+		return Expression->Eval().Derivative().AsExpr()->Eval(poly);
 	}
 }

@@ -6,241 +6,241 @@ using namespace std;
 
 namespace MiniCalculator
 {
-	shared_ptr<Expr> Expr::Simplify()
-	{
-		return Eval().AsExpr();
-	}
+    shared_ptr<Expr> Expr::Simplify()
+    {
+        return Eval().AsExpr();
+    }
 
-	Polyomial Expr::Eval()
-	{
-		return Polyomial();
-	}
+    Polyomial Expr::Eval()
+    {
+        return Polyomial();
+    }
 
-	Polyomial Expr::Eval(Polyomial poly)
-	{
-		return Polyomial();
-	}
+    Polyomial Expr::Eval(Polyomial poly)
+    {
+        return Polyomial();
+    }
 
-	long double Expr::Eval(long double x)
-	{
-		return 0.0;
-	}
+    long double Expr::Eval(long double x)
+    {
+        return 0.0;
+    }
 
-	Polyomial UnaryExpr::Eval()
-	{
-		Polyomial val = Right->Eval();
+    Polyomial UnaryExpr::Eval()
+    {
+        Polyomial val = Right->Eval();
 
-		switch (Operator.Type)
-		{
-		case TokenType::MINUS:
-			return -val;
-		default:
-			throw SyntaxException(Operator.Start);
-		}
-	}
+        switch (Operator.Type)
+        {
+        case TokenType::MINUS:
+            return -val;
+        default:
+            throw SyntaxException(Operator.Start);
+        }
+    }
 
-	long double UnaryExpr::Eval(long double x)
-	{
-		long double val = Right->Eval(x);
+    long double UnaryExpr::Eval(long double x)
+    {
+        long double val = Right->Eval(x);
 
-		switch (Operator.Type)
-		{
-		case TokenType::MINUS:
-			return -val;
-		default:
-			throw SyntaxException(Operator.Start);
-		}
-	}
+        switch (Operator.Type)
+        {
+        case TokenType::MINUS:
+            return -val;
+        default:
+            throw SyntaxException(Operator.Start);
+        }
+    }
 
-	Polyomial UnaryExpr::Eval(Polyomial poly)
-	{
-		switch (Operator.Type)
-		{
-		case TokenType::MINUS:
-			return -poly;
-		default:
-			throw SyntaxException(Operator.Start);
-		}
-	}
+    Polyomial UnaryExpr::Eval(Polyomial poly)
+    {
+        switch (Operator.Type)
+        {
+        case TokenType::MINUS:
+            return -poly;
+        default:
+            throw SyntaxException(Operator.Start);
+        }
+    }
 
-	/*
-	MonomialExpr::MonomialExpr(std::string source)
-	{
-		auto x_pos = source.find('x');
-		if (x_pos == std::string::npos)
-			x_pos = source.find('X');
+    /*
+    MonomialExpr::MonomialExpr(std::string source)
+    {
+        auto x_pos = source.find('x');
+        if (x_pos == std::string::npos)
+            x_pos = source.find('X');
 
-		if (x_pos == std::string::npos)
-		{
-			Exponent = 0;
-			if (source.length() == 1 && source[0] == '.')
-				throw UnexpectedNumberException(0);
-			Factor = stod(source);
-			return;
-		}
+        if (x_pos == std::string::npos)
+        {
+            Exponent = 0;
+            if (source.length() == 1 && source[0] == '.')
+                throw UnexpectedNumberException(0);
+            Factor = stod(source);
+            return;
+        }
 
-		auto tip_pos = source.find('^');
-		if (tip_pos == std::string::npos)
-		{
-			Exponent = 1;
-			Factor = x_pos == 0 ? 1 : stod(source.substr(0, x_pos));
-			return;
-		}
+        auto tip_pos = source.find('^');
+        if (tip_pos == std::string::npos)
+        {
+            Exponent = 1;
+            Factor = x_pos == 0 ? 1 : stod(source.substr(0, x_pos));
+            return;
+        }
 
-		Factor = x_pos == 0 ? 1 : stod(source.substr(0, x_pos));
-		Exponent = stoi(source.substr(tip_pos + 1, source.length() - tip_pos - 1));
-	}*/
+        Factor = x_pos == 0 ? 1 : stod(source.substr(0, x_pos));
+        Exponent = stoi(source.substr(tip_pos + 1, source.length() - tip_pos - 1));
+    }*/
 
-	Polyomial MonomialExpr::Eval()
-	{
-		map<int, long double> expfactors;
-		expfactors[Exponent] = Factor;
-		return Polyomial(expfactors);
-	}
+    Polyomial MonomialExpr::Eval()
+    {
+        map<int, long double> expfactors;
+        expfactors[Exponent] = Factor;
+        return Polyomial(expfactors);
+    }
 
-	long double MonomialExpr::Eval(long double x)
-	{
-		return pow(x, Exponent) * Factor;
-	}
+    long double MonomialExpr::Eval(long double x)
+    {
+        return pow(x, Exponent) * Factor;
+    }
 
-	Polyomial MonomialExpr::Eval(Polyomial poly)
-	{
-		poly ^= Exponent;
-		poly *= Factor;
-		return poly;
-	}
+    Polyomial MonomialExpr::Eval(Polyomial poly)
+    {
+        poly ^= Exponent;
+        poly *= Factor;
+        return poly;
+    }
 
-	Polyomial GroupingExpr::Eval()
-	{
-		return Expression->Eval();
-	}
+    Polyomial GroupingExpr::Eval()
+    {
+        return Expression->Eval();
+    }
 
-	long double GroupingExpr::Eval(long double x)
-	{
-		return Expression->Eval(x);
-	}
+    long double GroupingExpr::Eval(long double x)
+    {
+        return Expression->Eval(x);
+    }
 
-	Polyomial GroupingExpr::Eval(Polyomial poly)
-	{
-		return Expression->Eval(poly);
-	}
+    Polyomial GroupingExpr::Eval(Polyomial poly)
+    {
+        return Expression->Eval(poly);
+    }
 
-	Polyomial BinaryExpr::Eval()
-	{
-		Polyomial left = Left->Eval();
-		Polyomial right = Right->Eval();
+    Polyomial BinaryExpr::Eval()
+    {
+        Polyomial left = Left->Eval();
+        Polyomial right = Right->Eval();
 
-		long double _right = 0.0L;
+        long double _right = 0.0L;
 
-		switch (Operator.Type)
-		{
-		case TokenType::MINUS:
-			return left - right;
-		case TokenType::PLUS:
-			return left + right;
-		case TokenType::STAR:
-			return left * right;
-		case TokenType::SLASH:
-			_right = right.AsNum();
-			return left / _right;
-		case TokenType::TIP:
-			_right = right.AsNum();
-			return left ^ (int)_right;
-		default:
-			throw SyntaxException(Operator.Start);
-		}
-	}
+        switch (Operator.Type)
+        {
+        case TokenType::MINUS:
+            return left - right;
+        case TokenType::PLUS:
+            return left + right;
+        case TokenType::STAR:
+            return left * right;
+        case TokenType::SLASH:
+            _right = right.AsNum();
+            return left / _right;
+        case TokenType::TIP:
+            _right = right.AsNum();
+            return left ^ (int)_right;
+        default:
+            throw SyntaxException(Operator.Start);
+        }
+    }
 
-	long double BinaryExpr::Eval(long double x)
-	{
-		long double left = Left->Eval(x);
-		long double right = Right->Eval(x);
+    long double BinaryExpr::Eval(long double x)
+    {
+        long double left = Left->Eval(x);
+        long double right = Right->Eval(x);
 
-		switch (Operator.Type)
-		{
-		case TokenType::MINUS:
-			return left - right;
-		case TokenType::PLUS:
-			return left + right;
-		case TokenType::STAR:
-			return left * right;
-		case TokenType::SLASH:
-			return left / right;
-		case TokenType::TIP:
-			return std::powl(left, right);
-		default:
-			throw SyntaxException(Operator.Start);
-		}
-	}
+        switch (Operator.Type)
+        {
+        case TokenType::MINUS:
+            return left - right;
+        case TokenType::PLUS:
+            return left + right;
+        case TokenType::STAR:
+            return left * right;
+        case TokenType::SLASH:
+            return left / right;
+        case TokenType::TIP:
+            return std::powl(left, right);
+        default:
+            throw SyntaxException(Operator.Start);
+        }
+    }
 
-	Polyomial BinaryExpr::Eval(Polyomial poly)
-	{
-		Polyomial left = Left->Eval(poly);
-		Polyomial right = Right->Eval(poly);
+    Polyomial BinaryExpr::Eval(Polyomial poly)
+    {
+        Polyomial left = Left->Eval(poly);
+        Polyomial right = Right->Eval(poly);
 
-		long double _right = 0.0L;
+        long double _right = 0.0L;
 
-		switch (Operator.Type)
-		{
-		case TokenType::MINUS:
-			return left - right;
-		case TokenType::PLUS:
-			return left + right;
-		case TokenType::STAR:
-			return left * right;
-		case TokenType::SLASH:
-			_right = right.AsNum();
-			return left / _right;
-		case TokenType::TIP:
-			_right = right.AsNum();
-			return left ^ (int)_right;
-		default:
-			throw SyntaxException(Operator.Start);
-		}
-	}
+        switch (Operator.Type)
+        {
+        case TokenType::MINUS:
+            return left - right;
+        case TokenType::PLUS:
+            return left + right;
+        case TokenType::STAR:
+            return left * right;
+        case TokenType::SLASH:
+            _right = right.AsNum();
+            return left / _right;
+        case TokenType::TIP:
+            _right = right.AsNum();
+            return left ^ (int)_right;
+        default:
+            throw SyntaxException(Operator.Start);
+        }
+    }
 
-	Polyomial CompoundExpr::Eval()
-	{
-		return Base->Eval(Compound->Eval());
-	}
+    Polyomial CompoundExpr::Eval()
+    {
+        return Base->Eval(Compound->Eval());
+    }
 
-	long double CompoundExpr::Eval(long double x)
-	{
-		return Base->Eval(Compound->Eval(x));
-	}
+    long double CompoundExpr::Eval(long double x)
+    {
+        return Base->Eval(Compound->Eval(x));
+    }
 
-	Polyomial CompoundExpr::Eval(Polyomial poly)
-	{
-		return Base->Eval(Compound->Eval(poly));
-	}
+    Polyomial CompoundExpr::Eval(Polyomial poly)
+    {
+        return Base->Eval(Compound->Eval(poly));
+    }
 
-	Polyomial NumberExpr::Eval()
-	{
-		return Polyomial(Number);
-	}
+    Polyomial NumberExpr::Eval()
+    {
+        return Polyomial(Number);
+    }
 
-	long double NumberExpr::Eval(long double x)
-	{
-		return Number;
-	}
+    long double NumberExpr::Eval(long double x)
+    {
+        return Number;
+    }
 
-	Polyomial NumberExpr::Eval(Polyomial poly)
-	{
-		return Polyomial(Number);
-	}
+    Polyomial NumberExpr::Eval(Polyomial poly)
+    {
+        return Polyomial(Number);
+    }
 
-	Polyomial DerivativeExpr::Eval()
-	{
-		return Expression->Eval().Derivative();
-	}
+    Polyomial DerivativeExpr::Eval()
+    {
+        return Expression->Eval().Derivative();
+    }
 
-	long double DerivativeExpr::Eval(long double x)
-	{
-		return Expression->Eval().Derivative().AsExpr()->Eval(x);
-	}
+    long double DerivativeExpr::Eval(long double x)
+    {
+        return Expression->Eval().Derivative().AsExpr()->Eval(x);
+    }
 
-	Polyomial DerivativeExpr::Eval(Polyomial poly)
-	{
-		return Expression->Eval().Derivative().AsExpr()->Eval(poly);
-	}
+    Polyomial DerivativeExpr::Eval(Polyomial poly)
+    {
+        return Expression->Eval().Derivative().AsExpr()->Eval(poly);
+    }
 }

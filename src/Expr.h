@@ -35,7 +35,7 @@ namespace MiniCalculator
 		/// </summary>
 		/// <param name="x">自变量</param>
 		/// <returns>多项式的值</returns>
-		virtual double Eval(double x);
+		virtual long double Eval(long double x);
 	};
 
 	/// <summary>
@@ -69,7 +69,7 @@ namespace MiniCalculator
 		/// </summary>
 		/// <param name="x">自变量</param>
 		/// <returns>多项式的值</returns>
-		double Eval(double x) override;
+		long double Eval(long double x) override;
 		/// <summary>
 		/// 计算表达式
 		/// </summary>
@@ -101,7 +101,7 @@ namespace MiniCalculator
 		/// </summary>
 		/// <param name="x">自变量</param>
 		/// <returns>多项式的值</returns>
-		double Eval(double x) override;
+		long double Eval(long double x) override;
 		/// <summary>
 		/// 计算表达式
 		/// </summary>
@@ -138,7 +138,7 @@ namespace MiniCalculator
 		/// </summary>
 		/// <param name="x">自变量</param>
 		/// <returns>多项式的值</returns>
-		double Eval(double x) override;
+		long double Eval(long double x) override;
 		/// <summary>
 		/// 计算表达式
 		/// </summary>
@@ -173,7 +173,7 @@ namespace MiniCalculator
 		/// </summary>
 		/// <param name="x">自变量</param>
 		/// <returns>多项式的值</returns>
-		double Eval(double x) override;
+		long double Eval(long double x) override;
 		/// <summary>
 		/// 计算表达式
 		/// </summary>
@@ -191,14 +191,13 @@ namespace MiniCalculator
 		/// <summary>
 		/// 系数
 		/// </summary>
-		double Factor;
+		long double Factor;
 		/// <summary>
 		/// 指数
 		/// </summary>
 		int Exponent;
 	public:
-		MonomialExpr(double factor, int exponent) : Factor(factor), Exponent(exponent) {}
-		MonomialExpr(std::string source);
+		MonomialExpr(long double factor, int exponent) : Factor(factor), Exponent(exponent) {}
 		/// <summary>
 		/// 计算表达式
 		/// </summary>
@@ -209,7 +208,38 @@ namespace MiniCalculator
 		/// </summary>
 		/// <param name="x">自变量</param>
 		/// <returns>多项式的值</returns>
-		double Eval(double x) override;
+		long double Eval(long double x) override;
+		/// <summary>
+		/// 计算表达式
+		/// </summary>
+		/// <param name="poly">多项式</param>
+		/// <returns>返回多项式</returns>
+		Polyomial Eval(Polyomial poly) override;
+	};
+
+	/// <summary>
+	/// 数字表达式
+	/// </summary>
+	class NumberExpr : public Expr
+	{
+	private:
+		/// <summary>
+		/// 数字
+		/// </summary>
+		long double Number;
+	public:
+		NumberExpr(long double number) : Number(number) {}
+		/// <summary>
+		/// 计算表达式
+		/// </summary>
+		/// <returns>返回多项式</returns>
+		Polyomial Eval() override;
+		/// <summary>
+		/// 带入自变量计算多项式
+		/// </summary>
+		/// <param name="x">自变量</param>
+		/// <returns>多项式的值</returns>
+		long double Eval(long double x) override;
 		/// <summary>
 		/// 计算表达式
 		/// </summary>

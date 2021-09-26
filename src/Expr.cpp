@@ -21,7 +21,7 @@ namespace MiniCalculator
 		return Polyomial();
 	}
 
-	double Expr::Eval(double x)
+	long double Expr::Eval(long double x)
 	{
 		return 0.0;
 	}
@@ -39,9 +39,9 @@ namespace MiniCalculator
 		}
 	}
 
-	double UnaryExpr::Eval(double x)
+	long double UnaryExpr::Eval(long double x)
 	{
-		double val = Right->Eval(x);
+		long double val = Right->Eval(x);
 		
 		switch (Operator.Type)
 		{
@@ -63,6 +63,7 @@ namespace MiniCalculator
 		}
 	}
 
+	/*
 	MonomialExpr::MonomialExpr(std::string source)
 	{
 		auto x_pos = source.find('x');
@@ -88,16 +89,16 @@ namespace MiniCalculator
 
 		Factor = x_pos == 0 ? 1 : stod(source.substr(0, x_pos));
 		Exponent = stoi(source.substr(tip_pos + 1, source.length() - tip_pos - 1));
-	}
+	}*/
 
 	Polyomial MonomialExpr::Eval()
 	{
-		map<int, double> expfactors;
+		map<int, long double> expfactors;
 		expfactors[Exponent] = Factor;
 		return Polyomial(expfactors);
 	}
 
-	double MonomialExpr::Eval(double x)
+	long double MonomialExpr::Eval(long double x)
 	{
 		return pow(x, Exponent) * Factor;
 	}
@@ -114,7 +115,7 @@ namespace MiniCalculator
 		return Expression->Eval();
 	}
 
-	double GroupingExpr::Eval(double x)
+	long double GroupingExpr::Eval(long double x)
 	{
 		return Expression->Eval(x);
 	}
@@ -129,6 +130,8 @@ namespace MiniCalculator
 		Polyomial left = Left->Eval();
 		Polyomial right = Right->Eval();
 
+		long double _right = 0.0L;
+
 		switch (Operator.Type)
 		{
 		case TokenType::MINUS:
@@ -137,15 +140,21 @@ namespace MiniCalculator
 			return left + right;
 		case TokenType::STAR:
 			return left * right;
+		case TokenType::SLASH:
+			_right = right.AsNum();
+			return left / _right;
+		case TokenType::TIP:
+			_right = right.AsNum();
+			return left ^ (int)_right;
 		default:
 			throw SyntaxException(Operator.Start);
 		}
 	}
 
-	double BinaryExpr::Eval(double x)
+	long double BinaryExpr::Eval(long double x)
 	{
-		double left = Left->Eval(x);
-		double right = Right->Eval(x);
+		long double left = Left->Eval(x);
+		long double right = Right->Eval(x);
 
 		switch (Operator.Type)
 		{
@@ -155,6 +164,10 @@ namespace MiniCalculator
 			return left + right;
 		case TokenType::STAR:
 			return left * right;
+		case TokenType::SLASH:
+			return left / right;
+		case TokenType::TIP:
+			return std::powl(left, right);
 		default:
 			throw SyntaxException(Operator.Start);
 		}
@@ -165,6 +178,8 @@ namespace MiniCalculator
 		Polyomial left = Left->Eval(poly);
 		Polyomial right = Right->Eval(poly);
 
+		long double _right = 0.0L;
+
 		switch (Operator.Type)
 		{
 		case TokenType::MINUS:
@@ -173,6 +188,12 @@ namespace MiniCalculator
 			return left + right;
 		case TokenType::STAR:
 			return left * right;
+		case TokenType::SLASH:
+		    _right = right.AsNum();
+			return left / _right;
+		case TokenType::TIP:
+			_right = right.AsNum();
+			return left ^ (int)_right;
 		default:
 			throw SyntaxException(Operator.Start);
 		}
@@ -183,7 +204,7 @@ namespace MiniCalculator
 		return Base->Eval(Compound->Eval());
 	}
 
-	double CompoundExpr::Eval(double x)
+	long double CompoundExpr::Eval(long double x)
 	{
 		return Base->Eval(Compound->Eval(x));
 	}
@@ -191,5 +212,17 @@ namespace MiniCalculator
 	Polyomial CompoundExpr::Eval(Polyomial poly)
 	{
 		return Base->Eval(Compound->Eval(poly));
+	}
+	Polyomial NumberExpr::Eval()
+	{
+		return Polyomial(Number);
+	}
+	long double NumberExpr::Eval(long double x)
+	{
+		return Number;
+	}
+	Polyomial NumberExpr::Eval(Polyomial poly)
+	{
+		return Polyomial(Number);
 	}
 }

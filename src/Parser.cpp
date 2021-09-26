@@ -30,20 +30,38 @@ namespace MiniCalculator
 
     bool Parser::Peek(TokenType type)
     {
-        if (Current >= End)
+        if (Current == End)
             return false;
         return (*Current).Type == type;
     }
 
     bool Parser::Peek(TokenType type, TokenType next)
     {
-        if (Current + 1 >= End)
-            return false;
+        for(int i = 0; i < 2; ++i)
+            if ((Current + i) == End)
+                return false;
         return (*Current).Type == type && (*(Current + 1)).Type == next;
+    }
+
+    bool Parser::Peek(TokenType type, TokenType next, TokenType _next)
+    {
+        for (int i = 0; i < 3; ++i)
+            if ((Current + i) == End)
+                return false;
+        return (*Current).Type == type && (*(Current + 1)).Type == next && (*(Current + 2)).Type == _next;
+    }
+
+    bool Parser::Peek(TokenType type, TokenType next, TokenType _next, TokenType __next)
+    {
+        for (int i = 0; i < 4; ++i)
+            if ((Current + i) == End)
+                return false;
+        return (*Current).Type == type && (*(Current + 1)).Type == next && (*(Current + 2)).Type == _next  && (*(Current + 3)).Type == __next;
     }
 
     std::shared_ptr<Expr> Parser::GetBaseExpr()
     {
+        // ( Expr )
         if (Peek(TokenType::LEFT_PAREN))
         {
             Match(TokenType::LEFT_PAREN);
@@ -51,18 +69,55 @@ namespace MiniCalculator
             Match(TokenType::RIGHT_PAREN);
             return std::make_shared<GroupingExpr>(expr);
         }
-        else if (Peek(TokenType::MONOMIAL))
+        // ax^b
+        else if (Peek(TokenType::NUMBER, TokenType::X, TokenType::TIP, TokenType::NUMBER))
         {
-            auto token = Match(TokenType::MONOMIAL);
-            try
-            {
-                return std::make_shared<MonomialExpr>(token.GetValue(Source));
-            }
-            catch (...)
-            {
-                throw UnexpectedNumberException(token.Start);
-            }
+            auto token = Match(TokenType::NUMBER);
+            auto factor = std::stold(token.GetValue(Source));
+
+            Match(TokenType::X);
+            Match(TokenType::TIP);
+            
+            token = Match(TokenType::NUMBER);
+            auto exp = std::stoi(token.GetValue(Source));
+
+            return std::make_shared<MonomialExpr>(factor, exp);
         }
+        // x^b
+        else if (Peek(TokenType::X, TokenType::TIP, TokenType::NUMBER))
+        {
+            Match(TokenType::X);
+            Match(TokenType::TIP);
+
+            auto token = Match(TokenType::NUMBER);
+            auto exp = std::stoi(token.GetValue(Source));
+
+            return std::make_shared<MonomialExpr>(1.0L, exp);
+        }
+        // ax
+        else if (Peek(TokenType::NUMBER, TokenType::X))
+        {
+            auto token = Match(TokenType::NUMBER);
+            auto factor = std::stold(token.GetValue(Source));
+
+            Match(TokenType::X);
+
+            return std::make_shared<MonomialExpr>(factor, 1);
+        }
+        // x
+        else if (Peek(TokenType::X))
+        {
+            Match(TokenType::X);
+            return std::make_shared<MonomialExpr>(1.0L , 1);
+        }
+        // Number
+        else if (Peek(TokenType::NUMBER))
+        {
+            auto token = Match(TokenType::NUMBER);
+            auto number = std::stold(token.GetValue(Source));
+            return std::make_shared<NumberExpr>(number);
+        }
+        // Var ( Expr )
         else if (Peek(TokenType::VAR, TokenType::LEFT_PAREN))
         {
             auto token = Match(TokenType::VAR);
@@ -77,6 +132,7 @@ namespace MiniCalculator
 
             return std::make_shared<CompoundExpr>((*iter).second, expr);
         }
+        // Var
         else if (Peek(TokenType::VAR))
         {
             auto token = Match(TokenType::VAR);
@@ -109,20 +165,31 @@ namespace MiniCalculator
         return std::make_shared<UnaryExpr>(op, expr);
     }
 
-    std::shared_ptr<Expr> Parser::GetMutiExpr()
+    std::shared_ptr<Expr> Parser::GetPowExpr()
     {
         auto ret = GetUnaryExpr();
-        while (Peek(TokenType::STAR) || Peek(TokenType::LEFT_PAREN))
+        while (Peek(TokenType::TIP))
         {
-            if (Peek(TokenType::STAR))
+            Token _operator = Match();
+            ret = std::make_shared<BinaryExpr>(ret, _operator, GetUnaryExpr());
+        }
+        return ret;
+    }
+
+    std::shared_ptr<Expr> Parser::GetMutiExpr()
+    {
+        auto ret = GetPowExpr();
+        while (Peek(TokenType::STAR) || Peek(TokenType::SLASH) || Peek(TokenType::LEFT_PAREN))
+        {
+            if (Peek(TokenType::LEFT_PAREN))
             {
-                Token _operator = Match();
-                ret = std::make_shared<BinaryExpr>(ret, _operator, GetUnaryExpr());
+                Token _operator = Token(TokenType::STAR, 0, 0);
+                ret = std::make_shared<BinaryExpr>(ret, _operator, GetPowExpr());
             }
             else
             {
-                Token _operator = Token(TokenType::STAR, 0, 0);
-                ret = std::make_shared<BinaryExpr>(ret, _operator, GetUnaryExpr());
+                Token _operator = Match();
+                ret = std::make_shared<BinaryExpr>(ret, _operator, GetPowExpr());
             }
         }
         return ret;

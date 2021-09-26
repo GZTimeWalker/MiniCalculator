@@ -8,10 +8,10 @@ using namespace std;
 namespace MiniCalculator {
 	void Polyomial::Clean()
 	{
-		auto iter = ExpFactorMap.begin();
+		auto iter = PFMap.begin();
 		vector<int> delete_list;
 
-		while (iter != ExpFactorMap.end())
+		while (iter != PFMap.end())
 		{
 			if ((*iter).second == 0.0)
 				delete_list.push_back((*iter).first);
@@ -19,7 +19,17 @@ namespace MiniCalculator {
 		}
 
 		for (auto i : delete_list)
-			ExpFactorMap.erase(i);
+			PFMap.erase(i);
+	}
+
+	IDMap Polyomial::Add(IDMap left, IDMap right)
+	{
+		return IDMap();
+	}
+
+	IDMap Polyomial::Minus(IDMap left, IDMap right)
+	{
+		return IDMap();
 	}
 
 	Polyomial::Polyomial()
@@ -28,20 +38,25 @@ namespace MiniCalculator {
 
 	Polyomial::Polyomial(const Polyomial& other)
 	{
-		ExpFactorMap = other.ExpFactorMap;
+		PFMap = other.PFMap;
 	}
 
-	Polyomial::Polyomial(map<int, double>& data)
+	Polyomial::Polyomial(long double number)
 	{
-		ExpFactorMap = data;
+		PFMap[0] = number;
+	}
+
+	Polyomial::Polyomial(IDMap& data)
+	{
+		PFMap = data;
 	}
 
 	shared_ptr<Expr> Polyomial::AsExpr()
 	{
-		auto cur = ExpFactorMap.begin();
+		auto cur = PFMap.begin();
 		shared_ptr<Expr> expr = make_shared<MonomialExpr>((*cur).second, (*cur).first);
 
-		while (++cur != ExpFactorMap.end())
+		while (++cur != PFMap.end())
 		{
 			auto rhs = make_shared<MonomialExpr>((*cur).second, (*cur).first);
 			expr = make_shared<BinaryExpr>(expr, Token(TokenType::PLUS, 0, 0), rhs);
@@ -50,13 +65,21 @@ namespace MiniCalculator {
 		return expr;
 	}
 
+	long double Polyomial::AsNum()
+	{
+		if (PFMap.size() != 1 && (*(PFMap.begin())).first != 0)
+			throw UnsupportedOperationException(-2);
+
+		return PFMap[0];
+	}
+
 	Polyomial Polyomial::Derivative()
 	{
 		Polyomial result;
 
-		for (auto& item : ExpFactorMap)
+		for (auto& item : PFMap)
 			if(item.first != 0)
-				result.ExpFactorMap[item.first - 1] = item.second * item.first;
+				result.PFMap[item.first - 1] = item.second * item.first;
 
 		Clean();
 		return result;
@@ -64,32 +87,33 @@ namespace MiniCalculator {
 
 	Polyomial& Polyomial::operator+=(const Polyomial& other)
 	{
-		for (auto& item : other.ExpFactorMap)
-			ExpFactorMap[item.first] += item.second;
+		for (auto& item : other.PFMap)
+			PFMap[item.first] += item.second;
 		Clean();
 		return *this;
 	}
 
 	Polyomial& Polyomial::operator-=(const Polyomial& other)
 	{
-		for (auto& item : other.ExpFactorMap)
-			ExpFactorMap[item.first] -= item.second;
+		for (auto& item : other.PFMap)
+			PFMap[item.first] -= item.second;
 		Clean();
 		return *this;
 	}
 
 	Polyomial& Polyomial::operator*=(const Polyomial& other)
 	{
-		this->ExpFactorMap = ((*this) * other).ExpFactorMap;
+		auto res = (*this) * other;
+		this->PFMap = res.PFMap;
 		return *this;
 	}
 
-	Polyomial& Polyomial::operator*=(double factor)
+	Polyomial& Polyomial::operator*=(long double factor)
 	{
 		if (factor == 1)
 			return *this;
 
-		for (auto& item : ExpFactorMap)
+		for (auto& item : PFMap)
 			item.second *= factor;
 		return *this;
 	}
@@ -101,15 +125,20 @@ namespace MiniCalculator {
 
 		if (exp == 0)
 		{
-			ExpFactorMap.clear();
-			ExpFactorMap[0] = 1;
+			PFMap.clear();
+			PFMap[0] = 1.00L;
 			return *this;
 		}
 
 		Polyomial poly = *this;
 
-		for (int i = 1; i < exp; ++i)
-			*this *= poly;
+		while (exp > 0)
+		{
+			if ((exp & 1) == 1)
+				*this *= poly;
+			poly *= poly;
+			exp >>= 1;
+		}
 
 		return *this;
 	}
@@ -118,8 +147,8 @@ namespace MiniCalculator {
 	{
 		Polyomial result(*this);
 	
-		for (auto& item : other.ExpFactorMap)
-			result.ExpFactorMap[item.first] += item.second;
+		for (auto& item : other.PFMap)
+			result.PFMap[item.first] += item.second;
 
 		result.Clean();
 		return result;
@@ -129,8 +158,8 @@ namespace MiniCalculator {
 	{
 		Polyomial result(*this);
 
-		for (auto& item : other.ExpFactorMap)
-			result.ExpFactorMap[item.first] -= item.second;
+		for (auto& item : other.PFMap)
+			result.PFMap[item.first] -= item.second;
 
 		result.Clean();
 		return result;
@@ -141,22 +170,46 @@ namespace MiniCalculator {
 		Polyomial result;
 		Polyomial part;
 
-		for (auto& factor : ExpFactorMap)
+		for (auto& factor : PFMap)
 		{
-			for (auto& item : other.ExpFactorMap)
-				part.ExpFactorMap[item.first + factor.first] = item.second * factor.second;
+			for (auto& item : other.PFMap)
+				part.PFMap[item.first + factor.first] = item.second * factor.second;
 
 			result += part;
-			part.ExpFactorMap.clear();
+			part.PFMap.clear();
 		}
 
 		result.Clean();
 		return result;
 	}
 
+	Polyomial Polyomial::operator/(long double divisor) const
+	{
+		Polyomial result(*this);
+		result /= divisor;
+		return result;
+	}
+
+	Polyomial& Polyomial::operator/=(long double divisor)
+	{
+		if (divisor == 1)
+			return *this;
+
+		for (auto& item : PFMap)
+			item.second /= divisor;
+		return *this;
+	}
+
+	Polyomial Polyomial::operator^(int exp) const
+	{
+		Polyomial result(*this);
+		result ^= exp;
+		return result;
+	}
+
 	Polyomial& Polyomial::operator-(void)
 	{
-		for (auto &pair : ExpFactorMap)
+		for (auto &pair : PFMap)
 			pair.second = -pair.second;
 		Clean();
 		return *this;
@@ -165,19 +218,19 @@ namespace MiniCalculator {
     std::ostream& operator<<(std::ostream& out, const Polyomial& polyomial)
 	{
 		out << setiosflags(ios::fixed) << setprecision(2);
-		double factor;
+		long double factor;
 
-		if (polyomial.ExpFactorMap.size() == 0)
+		if (polyomial.PFMap.size() == 0)
 		{
 			out << 0.0;
 			return out;
 		}
 
-		for (auto iter = polyomial.ExpFactorMap.begin(); iter != polyomial.ExpFactorMap.end(); ++iter)
+		for (auto iter = polyomial.PFMap.begin(); iter != polyomial.PFMap.end(); ++iter)
 		{
 			factor = (*iter).second;
 
-			if (iter == polyomial.ExpFactorMap.begin())
+			if (iter == polyomial.PFMap.begin())
 			{
 				if(factor < 0)
 					out << "- ";

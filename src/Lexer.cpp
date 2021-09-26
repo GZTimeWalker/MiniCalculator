@@ -87,42 +87,38 @@ namespace MiniCalculator
 		if (Match('*'))
 			return Token(TokenType::STAR, Current - 1, Current);
 
+		if (Match('/'))
+			return Token(TokenType::SLASH, Current - 1, Current);
+
+		if (Match('\''))
+			return Token(TokenType::RSQUO, Current - 1, Current);
+
+		if (Match('^'))
+			return Token(TokenType::TIP, Current - 1, Current);
+
+		if (Match({ 'x' , 'X' }))
+			return Token(TokenType::X, Current - 1, Current);
+
 		// match monomial
 		unsigned int start = Current;
 
-		if (!Match({ 'x' , 'x' }))
+		if (Match(isalpha))
 		{
-			if (Match(isalpha))
-			{
-				while (Match(isalpha));
-				return Token(TokenType::VAR, start, Current);
-			}
-
-			while (Match(isdigit));
-
-			// match float
-			if (Match('.'))
-				while (Match(isdigit));
-
-			if (start == Current)
-				return Token(TokenType::NONE, start, Current++);
-			
-			// match constant
-			if (!Match({ 'x' , 'x' }))
-				return Token(TokenType::MONOMIAL, start, Current);
+			while (Match(isalpha));
+			return Token(TokenType::VAR, start, Current);
 		}
 
-		// match ax / x
-		if(!Match('^'))
-			return Token(TokenType::MONOMIAL, start, Current);
+		if (Match(isdigit) || Match('.'))
+		{
+			while (Match(isdigit) || Match('.'));
+			
+			if(Current == start && Source[start] == '.')
+				throw UnexpectedNumberException(start);
 
-		if(Match(isspace))
-			return Token(TokenType::NONE, start, Current);
-		
-		// match ax^b / x^c
-		while (Match(isdigit));
+			return Token(TokenType::NUMBER, start, Current);
+		}
 
-		return Token(TokenType::MONOMIAL, start, Current);
+		return Token(TokenType::NONE, start, Current);
 	}
 }
 

@@ -19,9 +19,13 @@ namespace MiniCalculator
 		/// </summary>
 		RIGHT_PAREN,
 		/// <summary>
-		/// 单项式
+		/// 未知数
 		/// </summary>
-		MONOMIAL,
+		X,
+		/// <summary>
+		/// 数字
+		/// </summary>
+		NUMBER,
 		/// <summary>
 		/// 加号 +
 		/// </summary>
@@ -35,13 +39,25 @@ namespace MiniCalculator
 		/// </summary>
 		STAR,
 		/// <summary>
+		/// 乘方号 ^
+		/// </summary>
+		TIP,
+		/// <summary>
+		/// 除号 /
+		/// </summary>
+		SLASH,
+		/// <summary>
+		/// 求导符号单引号 '
+		/// </summary>
+		RSQUO,
+		/// <summary>
 		/// 变量
 		/// </summary>
 		VAR,
 		/// <summary>
 		/// 空
 		/// </summary>
-		NONE,
+		NONE
 	};
 
 	class Token {

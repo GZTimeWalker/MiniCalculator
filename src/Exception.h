@@ -13,6 +13,8 @@ namespace MiniCalculator
 	public:
 		/// <summary>
 		/// 异常发生的位置
+		/// -1 -> 文本末尾
+		/// -2 -> 不支持文本追踪
 		/// </summary>
 		int pos;
 		/// <summary>
@@ -68,6 +70,14 @@ namespace MiniCalculator
 	class UnexpectedNumberException : public Exception {
 	public:
 		UnexpectedNumberException(int pos) : Exception("Unexpected Number", pos) {}
+	};
+
+	/// <summary>
+	/// 不支持的数学运算
+	/// </summary>
+	class UnsupportedOperationException : public Exception {
+	public:
+		UnsupportedOperationException(int pos) : Exception("Unsupported Operation", pos) {}
 	};
 
 	/// <summary>

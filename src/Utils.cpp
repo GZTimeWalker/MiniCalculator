@@ -1,5 +1,6 @@
 #include "Utils.h"
 #include "Token.h"
+#include "Expr.h"
 
 namespace MiniCalculator
 {
@@ -39,7 +40,7 @@ namespace MiniCalculator
 			return "Left Paren";
 		case MiniCalculator::TokenType::RIGHT_PAREN:
 			return "Right Paren";
-		case MiniCalculator::TokenType::MONOMIAL:
+		case MiniCalculator::TokenType::X:
 			return "Monomial";
 		case MiniCalculator::TokenType::PLUS:
 			return "Plus";
@@ -128,6 +129,15 @@ namespace MiniCalculator
 		std::cout << msg << std::endl;
 	}
 
+	void Utils::PrintExpr(std::shared_ptr<Expr> expr, std::string& input)
+	{
+		Print(" | ", Color::YELLOW);
+		Print(input, Color::WHITE);
+		Print(" = ", Color::CYAN);
+		SetColor(Color::WHITE);
+		std::cout << expr->Eval() << std::endl;
+	}
+
 	void Utils::PrintException(Exception e, std::string source)
 	{
 		PrintLine("An exception has occurred!", Color::RED);
@@ -164,6 +174,12 @@ namespace MiniCalculator
 		PrintLine(msg, Color::YELLOW);
 
 		msg.clear();
+
+		if (e.pos = -2)
+		{
+			PrintLine("\n", Color::WHITE);
+			return;
+		}
 
 		if (e.pos == -1)
 			rpos = source.length();

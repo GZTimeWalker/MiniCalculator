@@ -17,8 +17,8 @@ namespace MiniCalculator
 	public:
 		static void DoPolyomialTest()
 		{
-			map<int, double> a = { {1, 2}, {0, 3}, {2,2}, {-2,3} };
-			map<int, double> b = { {0,9}, {1, 4},{2,2} };
+			map<int, long double> a = { {1, 2}, {0, 3}, {2,2}, {-2,3} };
+			map<int, long double> b = { {0,9}, {1, 4},{2,2} };
 			Polyomial apoly(a);
 			Polyomial bpoly(b);
 			cout << "Poly     a = " << apoly << endl;
@@ -31,7 +31,7 @@ namespace MiniCalculator
 			cout << "Poly (a * b)' = " << (apoly * bpoly).Derivative() << endl;
 		}
 
-		static void DoLexerTest()
+		/*static void DoLexerTest()
 		{
 			string input = "2*3+4x^2+(2+3x^1)-6-3x+5x^2(x^7-3)";
 			for (auto& item : Lexer(input).GetTokens())
@@ -54,7 +54,7 @@ namespace MiniCalculator
 
 			expr = MonomialExpr("3x");
 			cout << expr.Eval() << endl;
-		}
+		}*/
 
 		static void DoParserTest()
 		{
@@ -95,7 +95,7 @@ namespace MiniCalculator
 		static void DoTest()
 		{
 			string input;
-			double x;
+			long double x;
 			while (true)
 			{
 				try {

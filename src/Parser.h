@@ -62,16 +62,24 @@ namespace MiniCalculator
 		/// <returns> «∑Ò∆•≈‰</returns>
 		bool Peek(TokenType type, TokenType next);
 
+		bool Peek(TokenType type, TokenType next, TokenType _next);
+
+		bool Peek(TokenType type, TokenType next, TokenType _next, TokenType __next);
+
 		/// <summary>
 		/// => MonomialExpr | GroupingExpr | Expr ( Expr )
 		/// </summary>
 		std::shared_ptr<Expr> GetBaseExpr();
 		/// <summary>
-		/// => UnaryExpr
+		/// => UnaryExpr (-, +)
 		/// </summary>
 		std::shared_ptr<Expr> GetUnaryExpr();
 		/// <summary>
-		/// => BinaryExpr (*, nothing)
+		/// => PowExpr (^)
+		/// </summary>
+		std::shared_ptr<Expr> GetPowExpr();
+		/// <summary>
+		/// => BinaryExpr (*, nothing, /)
 		/// </summary>
 		std::shared_ptr<Expr> GetMutiExpr();
 		/// <summary>

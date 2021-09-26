@@ -9,6 +9,7 @@ namespace MiniCalculator
 {
 
     enum class TokenType;
+    class Expr;
     /// <summary>
     /// 颜色枚举
     /// </summary>
@@ -58,6 +59,12 @@ namespace MiniCalculator
         static void PrintLine(const char* msg);
         static void PrintLine(std::string msg, Color color);
 
+        /// <summary>
+        /// 输出表达式
+        /// </summary>
+        /// <param name="expr">表达式</param>
+        /// <param name="input">输入</param>
+        static void PrintExpr(std::shared_ptr<Expr> expr, std::string& input);
         /// <summary>
         /// 异常处理
         /// </summary>

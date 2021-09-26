@@ -17,8 +17,8 @@ int main()
 
     string input;
     string flag, content, param;
-    int equal_pos = -1;
-    double x;
+    size_t equal_pos = -1;
+    long double x;
     
     // main loop
     while (true)
@@ -90,7 +90,42 @@ int main()
                 Utils::PrintException(Exception("Unknown Exception.", 0), content);
             }
         }
+        else
+        {
+            string content = input;
 
+            content.erase(0, content.find_first_not_of(' '));
+            content.erase(content.find_last_not_of(' ') + 1);
+
+            try
+            {
+                // 语义解析
+                if (content.at(content.length() - 1) == '\'')
+                {
+                    content = content.erase(content.find_last_of('\''));
+                    auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
+                    expr = expr->Eval().Derivative().AsExpr();
+                    Utils::PrintExpr(expr, content);
+                    continue;
+                }
+                else
+                {
+                    auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
+                    Utils::PrintExpr(expr, content);
+                    continue;
+                }
+            }
+            catch (Exception e)
+            {
+                Utils::PrintException(e, content);
+            }
+            catch (...)
+            {
+                Utils::PrintException(Exception("Unknown Exception.", 0), content);
+            }
+        }
+
+        /*
         // 输出变量表达式
         auto iter = vars->find(input);
         if (iter != vars->end())
@@ -144,6 +179,7 @@ int main()
                 Utils::PrintException(UnexpectedNumberException(0), param);
             }
         }
+        */
     }
 
     delete vars;

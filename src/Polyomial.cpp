@@ -67,7 +67,7 @@ namespace MiniCalculator {
 
 	long double Polyomial::AsNum()
 	{
-		if (PFMap.size() != 1 && (*(PFMap.begin())).first != 0)
+		if (PFMap.size() != 1 || (*(PFMap.begin())).first != 0)
 			throw UnsupportedOperationException(-2);
 
 		return PFMap[0];
@@ -139,7 +139,7 @@ namespace MiniCalculator {
 
 		while (exp > 0)
 		{
-			if ((exp & 1) >= 0)
+			if ((exp & 1) == 1)
 				*this *= poly;
 			poly *= poly;
 			exp >>= 1;
@@ -172,6 +172,12 @@ namespace MiniCalculator {
 
 	Polyomial Polyomial::operator*(const Polyomial& other) const
 	{
+		if (PFMap.size() == 1 && (*(PFMap.begin())).first == 0 && (*(PFMap.begin())).second == 0)
+			return Polyomial(0);
+
+		if (other.PFMap.size() == 1 && (*(other.PFMap.begin())).first == 0 && (*(other.PFMap.begin())).second == 0)
+			return Polyomial(0);
+
 		Polyomial result;
 		Polyomial part;
 

@@ -135,9 +135,11 @@ namespace MiniCalculator {
 
 		Polyomial poly = *this;
 
+		--exp;
+
 		while (exp > 0)
 		{
-			if ((exp & 1) == 1)
+			if ((exp & 1) >= 0)
 				*this *= poly;
 			poly *= poly;
 			exp >>= 1;

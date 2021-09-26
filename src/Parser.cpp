@@ -171,9 +171,6 @@ namespace MiniCalculator
 
         auto expr = GetDerivativeExpr();
 
-        if (Peek(TokenType::RSQUO))
-            op = Match(TokenType::RSQUO);
-
         if (op.Type == TokenType::NONE)
             return expr;
         
@@ -232,6 +229,12 @@ namespace MiniCalculator
 
     std::shared_ptr<Expr> Parser::GenExpr()
     {
-        return GetPlusExpr();
+        auto expr = GetPlusExpr();
+        if (Current != End)
+        {
+            auto token = Match();
+            throw UnexpectedTokenException(token.Start);
+        }
+        return expr;
     }
 }

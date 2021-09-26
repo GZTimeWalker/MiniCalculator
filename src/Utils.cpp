@@ -175,7 +175,7 @@ namespace MiniCalculator
 
 		msg.clear();
 
-		if (e.pos = -2)
+		if (e.pos == -2)
 		{
 			PrintLine("\n", Color::WHITE);
 			return;

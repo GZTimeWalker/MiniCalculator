@@ -74,7 +74,7 @@ int main()
             }
             catch (...)
             {
-                Utils::PrintException(Exception("Unknown Exception.", 0), content);
+                Utils::PrintException(Exception("Unknown Exception.", -2), content);
             }
         }
         else
@@ -96,7 +96,7 @@ int main()
             }
             catch (...)
             {
-                Utils::PrintException(Exception("Unknown Exception.", 0), content);
+                Utils::PrintException(Exception("Unknown Exception.", -2), content);
             }
         }
     }

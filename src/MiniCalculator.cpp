@@ -62,7 +62,7 @@ int main()
 
             try
             {
-                auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
+                auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr();
                 auto res = vars->insert(make_pair(flag, expr));
                 if (!res.second)
                     (*res.first).second = expr;
@@ -86,7 +86,7 @@ int main()
 
             try
             {
-                auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Simplify();
+                auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr();
                 Utils::PrintExpr(expr, content);
                 continue;
             }

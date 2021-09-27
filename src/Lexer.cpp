@@ -108,7 +108,7 @@ namespace MiniCalculator
             return Token(TokenType::VAR, start, Current);
         }
 
-        if (Match(isdigit) || Match('.'))
+        if (Match(isdigit) || Match({'.','-'}))
         {
             while (Match(isdigit) || Match('.'));
             

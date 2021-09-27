@@ -69,6 +69,23 @@ namespace MiniCalculator
             Match(TokenType::RIGHT_PAREN);
             return std::make_shared<GroupingExpr>(expr);
         }
+        // ax^(b)
+        else if (Peek(TokenType::NUMBER, TokenType::X, TokenType::TIP, TokenType::LEFT_PAREN))
+        {
+            auto token = Match(TokenType::NUMBER);
+            auto factor = std::stold(token.GetValue(Source));
+
+            Match(TokenType::X);
+            Match(TokenType::TIP);
+
+            Match(TokenType::LEFT_PAREN);
+            auto expr = GetPlusExpr();
+            Match(TokenType::RIGHT_PAREN);
+
+            auto exp = expr->Eval().AsNum();
+
+            return std::make_shared<MonomialExpr>(factor, exp);
+        }
         // ax^b
         else if (Peek(TokenType::NUMBER, TokenType::X, TokenType::TIP, TokenType::NUMBER))
         {
@@ -82,6 +99,20 @@ namespace MiniCalculator
             auto exp = std::stoi(token.GetValue(Source));
 
             return std::make_shared<MonomialExpr>(factor, exp);
+        }
+        // x^(b)
+        else if (Peek(TokenType::X, TokenType::TIP, TokenType::LEFT_PAREN))
+        {
+            Match(TokenType::X);
+            Match(TokenType::TIP);
+
+            Match(TokenType::LEFT_PAREN);
+            auto expr = GetPlusExpr();
+            Match(TokenType::RIGHT_PAREN);
+
+            auto exp = expr->Eval().AsNum();
+
+            return std::make_shared<MonomialExpr>(1.0L, exp);
         }
         // x^b
         else if (Peek(TokenType::X, TokenType::TIP, TokenType::NUMBER))

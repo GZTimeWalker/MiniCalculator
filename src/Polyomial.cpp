@@ -259,7 +259,12 @@ namespace MiniCalculator {
             else if ((*iter).first == 1)
                 out << "x";
             else
-                out << "x^" << (*iter).first;
+            {
+                if ((*iter).first > 0)
+                    out << "x^" << (*iter).first;
+                else
+                    out << "x^(" << (*iter).first << ")";
+            }
         }
 
         return out;

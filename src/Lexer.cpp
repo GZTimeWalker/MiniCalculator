@@ -16,16 +16,11 @@ namespace MiniCalculator
     {
         do
         {
-            try {
-                auto token = Advance();
-                if (token.Type != TokenType::NONE)
-                    Tokens.push_back(token);
-                else if(!Finished())
-                    throw UnexpectedTokenException(token.Start);
-            }
-            catch(Exception e) {
-                throw;
-            }
+            auto token = Advance();
+            if (token.Type != TokenType::NONE)
+                Tokens.push_back(token);
+            else if(!Finished())
+                throw UnexpectedTokenException(token.Start);
         } while (!Finished());
 
         return Tokens;
@@ -99,15 +94,16 @@ namespace MiniCalculator
         if (Match({ 'x' , 'X' }))
             return Token(TokenType::X, Current - 1, Current);
 
-        // match monomial
         unsigned int start = Current;
-
+        
+        // match veriable
         if (Match(isalpha))
         {
             while (Match(isalpha));
             return Token(TokenType::VAR, start, Current);
         }
 
+        // match number
         if (Match(isdigit) || Match('.'))
         {
             while (Match(isdigit) || Match('.'));

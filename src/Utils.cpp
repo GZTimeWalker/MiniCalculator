@@ -40,6 +40,8 @@ namespace MiniCalculator
             return "Left Paren";
         case MiniCalculator::TokenType::RIGHT_PAREN:
             return "Right Paren";
+        case MiniCalculator::TokenType::NUMBER:
+            return "Number";
         case MiniCalculator::TokenType::X:
             return "Monomial";
         case MiniCalculator::TokenType::PLUS:
@@ -50,6 +52,12 @@ namespace MiniCalculator
             return "Star";
         case MiniCalculator::TokenType::VAR:
             return "Variable";
+        case MiniCalculator::TokenType::RSQUO:
+            return "Single quotation";
+        case MiniCalculator::TokenType::SLASH:
+            return "Slash";
+        case MiniCalculator::TokenType::TIP:
+            return "Tip";
         case MiniCalculator::TokenType::NONE:
         default:
             return "Unknown";

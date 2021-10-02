@@ -179,7 +179,8 @@ namespace MiniCalculator
         size_t begin = 0;
         size_t end = source.length();
 
-        std::string msg = "[*] > ";
+        Print("[*] > ", Color::YELLOW);
+        std::string msg;
 
         if (e.type == -1)
             pos = end;
@@ -187,11 +188,9 @@ namespace MiniCalculator
         if (pos - 15 < end)
         {
             begin = pos - 15;
-            rpos = pos - begin;
+            rpos = pos - begin + 3;
             msg += "...";
         }
-        else
-            msg += "   ";
 
         if (pos + 15 < end)
         {
@@ -202,14 +201,12 @@ namespace MiniCalculator
         else
             msg += source.substr(begin, end - begin);
 
-        PrintLine(msg, Color::YELLOW);
+        PrintLine(msg, Color::WHITE);
 
         msg.clear();
 
-        if (e.type == -1)
-            rpos = source.length();
+        Print("[*]   ", Color::YELLOW);
 
-        msg += "[*] At   ";
         for (unsigned int i = 0; i < rpos; ++i)
             msg += " ";
         msg += "^ Here";

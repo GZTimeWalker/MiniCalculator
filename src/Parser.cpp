@@ -96,7 +96,7 @@ namespace MiniCalculator
             Match(TokenType::TIP);
             
             token = Match(TokenType::NUMBER);
-            auto exp = std::stoi(token.GetValue(Source));
+            auto exp = std::stold(token.GetValue(Source));
 
             return std::make_shared<MonomialExpr>(factor, exp);
         }
@@ -121,7 +121,7 @@ namespace MiniCalculator
             Match(TokenType::TIP);
 
             auto token = Match(TokenType::NUMBER);
-            auto exp = std::stoi(token.GetValue(Source));
+            auto exp = std::stold(token.GetValue(Source));
 
             return std::make_shared<MonomialExpr>(1.0L, exp);
         }

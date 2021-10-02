@@ -16,10 +16,6 @@ namespace MiniCalculator
     {
     private:
         /// <summary>
-        /// Token 起始迭代器
-        /// </summary>
-        std::vector<Token>::const_iterator Begin;
-        /// <summary>
         /// Token 终止迭代器
         /// </summary>
         std::vector<Token>::const_iterator End;

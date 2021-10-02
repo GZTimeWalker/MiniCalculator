@@ -240,6 +240,7 @@ namespace MiniCalculator
 
     std::shared_ptr<Expr> Parser::GetPlusExpr()
     {
+
         auto ret = GetMutiExpr();
         while (Peek(TokenType::PLUS) || Peek(TokenType::MINUS))
         {
@@ -251,7 +252,6 @@ namespace MiniCalculator
 
     Parser::Parser(const std::vector<Token>& tokens, std::string& source, std::map<std::string, std::shared_ptr<Expr>>* vars)
     {
-        Begin = tokens.cbegin();
         End = tokens.cend();
         Current = tokens.cbegin();
         Source = source;

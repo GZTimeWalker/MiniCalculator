@@ -26,6 +26,7 @@ int main(int argc, char* argv[])
     // main loop
     while (true)
     {
+        Utils::DEPTH = 0;
         Utils::Print(" > ", Color::YELLOW);
 
         Utils::SetColor(Color::WHITE);

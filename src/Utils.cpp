@@ -161,7 +161,7 @@ namespace MiniCalculator
     {
         if (in)
         {
-            for (int i = 0; i < DEPTH++; ++i)
+            for (int i = 0; i < DEPTH; ++i)
                 std::cout << "  ";
             Print(">> ", Color::GREEN);
             Print("Enter ", Color::WHITE);

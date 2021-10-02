@@ -10,9 +10,12 @@
 using namespace MiniCalculator;
 using namespace std;
 
-int main()
+int main(int argc, char* argv[])
 {
     Utils::Init();
+
+    if (argc > 1 && strcmp(argv[1], "-d") == 0)
+        Utils::DEBUG = true;
 
     auto vars = new std::map<std::string, std::shared_ptr<Expr>>();
 

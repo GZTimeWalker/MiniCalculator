@@ -68,7 +68,7 @@ namespace MiniCalculator {
     long double Polyomial::AsNum()
     {
         if (PFMap.size() != 1 || (*(PFMap.begin())).first != 0)
-            throw UnsupportedOperationException(-2);
+            throw UnsupportedOperationException();
 
         return PFMap[0];
     }

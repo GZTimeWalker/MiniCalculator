@@ -63,34 +63,6 @@ namespace MiniCalculator
         }
     }
 
-    /*
-    MonomialExpr::MonomialExpr(std::string source)
-    {
-        auto x_pos = source.find('x');
-        if (x_pos == std::string::npos)
-            x_pos = source.find('X');
-
-        if (x_pos == std::string::npos)
-        {
-            Exponent = 0;
-            if (source.length() == 1 && source[0] == '.')
-                throw UnexpectedNumberException(0);
-            Factor = stod(source);
-            return;
-        }
-
-        auto tip_pos = source.find('^');
-        if (tip_pos == std::string::npos)
-        {
-            Exponent = 1;
-            Factor = x_pos == 0 ? 1 : stod(source.substr(0, x_pos));
-            return;
-        }
-
-        Factor = x_pos == 0 ? 1 : stod(source.substr(0, x_pos));
-        Exponent = stoi(source.substr(tip_pos + 1, source.length() - tip_pos - 1));
-    }*/
-
     Polyomial MonomialExpr::Eval()
     {
         map<int, long double> expfactors;
@@ -144,7 +116,8 @@ namespace MiniCalculator
             _right = right.AsNum();
             return left / _right;
         case TokenType::TIP:
-            _right = right.AsNum();
+            if (modfl(right.AsNum(), &_right) != 0.0)
+                throw UnsupportedOperationException();
             return left ^ (int)_right;
         default:
             throw SyntaxException(Operator.Start);
@@ -192,7 +165,8 @@ namespace MiniCalculator
             _right = right.AsNum();
             return left / _right;
         case TokenType::TIP:
-            _right = right.AsNum();
+            if (modfl(right.AsNum(), &_right) != 0.0)
+                throw UnsupportedOperationException();
             return left ^ (int)_right;
         default:
             throw SyntaxException(Operator.Start);

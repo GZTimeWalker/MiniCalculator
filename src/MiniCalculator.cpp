@@ -19,7 +19,6 @@ int main()
     string input;
     string flag, content, param;
     size_t equal_pos = -1;
-    long double x;
     
     // main loop
     while (true)
@@ -86,8 +85,8 @@ int main()
 
             try
             {
-                auto expr = Parser(Lexer(content).GetTokens(), content, vars).GenExpr();
-                Utils::PrintExpr(expr, content);
+                auto poly = Parser(Lexer(content).GetTokens(), content, vars).GenExpr()->Eval();
+                Utils::PrintExpr(poly, content);
                 continue;
             }
             catch (Exception e)

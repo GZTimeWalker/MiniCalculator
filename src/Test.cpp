@@ -31,38 +31,13 @@ namespace MiniCalculator
             cout << "Poly (a * b)' = " << (apoly * bpoly).Derivative() << endl;
         }
 
-        /*static void DoLexerTest()
-        {
-            string input = "2*3+4x^2+(2+3x^1)-6-3x+5x^2(x^7-3)";
-            for (auto& item : Lexer(input).GetTokens())
-                cout << "pos: " << item.Start << "\t with " << item.GetValue(input) << endl;
-
-            MonomialExpr expr("4.5x^2");
-            cout << expr.Eval() << endl;
-
-            expr = MonomialExpr("4.5x");
-            cout << expr.Eval() << endl;
-
-            expr = MonomialExpr("4.5");
-            cout << expr.Eval() << endl;
-
-            expr = MonomialExpr("x");
-            cout << expr.Eval() << endl;
-
-            expr = MonomialExpr("x^3");
-            cout << expr.Eval() << endl;
-
-            expr = MonomialExpr("3x");
-            cout << expr.Eval() << endl;
-        }*/
-
         static void DoParserTest()
         {
             string _input = "f = 2*3+4x^2+(2+3x^1)-6+6(3x-6x^3)";
 
-            int equal_pos = _input.find('=');
+            size_t equal_pos = _input.find('=');
             string flag = _input.substr(0, equal_pos);
-            string input = _input.substr(equal_pos + 1, input.length());
+            string input = _input.substr(equal_pos + 1, _input.length());
 
             auto tokens = Lexer(input).GetTokens();
 

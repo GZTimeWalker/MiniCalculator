@@ -13,17 +13,22 @@ namespace MiniCalculator
     public:
         /// <summary>
         /// 异常发生的位置
-        /// -1 -> 文本末尾
-        /// -2 -> 不支持文本追踪
         /// </summary>
-        int pos;
+        size_t pos;
+        /// <summary>
+        /// 异常发生的种类
+        /// 0  -> pos处
+        /// 1 -> 文本末尾
+        /// 2 -> 不支持文本追踪
+        /// </summary>
+        int type = 0;
         /// <summary>
         /// 异常的相关描述
         /// </summary>
         std::string descr;
 
     public:
-        Exception(std::string descr, int pos) : descr(descr), pos(pos){}
+        Exception(std::string descr, size_t pos, int type = 0) : descr(descr), pos(pos){}
 
         friend std::ostream& operator<<(std::ostream& out, const Exception& e)
         {
@@ -37,7 +42,7 @@ namespace MiniCalculator
     /// </summary>
     class SyntaxException : public Exception {
     public:
-        SyntaxException(int pos): Exception("Syntax Exception", pos) {}
+        SyntaxException(size_t pos): Exception("Syntax Exception", pos) {}
     };
 
     /// <summary>
@@ -45,7 +50,7 @@ namespace MiniCalculator
     /// </summary>
     class UnexpectedTokenException : public Exception {
     public:
-        UnexpectedTokenException(int pos) : Exception("Unexpected Token", pos) {}
+        UnexpectedTokenException(size_t pos) : Exception("Unexpected Token", pos) {}
     };
 
     /// <summary>
@@ -53,7 +58,7 @@ namespace MiniCalculator
     /// </summary>
     class UnexpectedEOFException : public Exception {
     public:
-        UnexpectedEOFException() : Exception("Unexpected EOF", -1) {}
+        UnexpectedEOFException() : Exception("Unexpected EOF", 0, -1) {}
     };
 
     /// <summary>
@@ -61,7 +66,7 @@ namespace MiniCalculator
     /// </summary>
     class UnexpectedExpressionException : public Exception {
     public:
-        UnexpectedExpressionException(int pos) : Exception("Unexpected Expression", pos) {}
+        UnexpectedExpressionException(size_t pos) : Exception("Unexpected Expression", pos) {}
     };
 
     /// <summary>
@@ -69,7 +74,7 @@ namespace MiniCalculator
     /// </summary>
     class UnexpectedNumberException : public Exception {
     public:
-        UnexpectedNumberException(int pos) : Exception("Unexpected Number", pos) {}
+        UnexpectedNumberException(size_t pos) : Exception("Unexpected Number", pos) {}
     };
 
     /// <summary>
@@ -77,7 +82,7 @@ namespace MiniCalculator
     /// </summary>
     class UnsupportedOperationException : public Exception {
     public:
-        UnsupportedOperationException(int pos) : Exception("Unsupported Operation", pos) {}
+        UnsupportedOperationException() : Exception("Unsupported Operation", 0, -2) {}
     };
 
     /// <summary>
@@ -85,7 +90,7 @@ namespace MiniCalculator
     /// </summary>
     class IllegalVarNameException : public Exception {
     public:
-        IllegalVarNameException(int pos) : Exception("Illegal Variable Name", pos) {}
+        IllegalVarNameException(size_t pos) : Exception("Illegal Variable Name", pos) {}
     };
 }
 

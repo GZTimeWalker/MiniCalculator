@@ -94,7 +94,7 @@ namespace MiniCalculator
         if (Match({ 'x' , 'X' }))
             return Token(TokenType::X, Current - 1, Current);
 
-        unsigned int start = Current;
+        size_t start = Current;
         
         // match veriable
         if (Match(isalpha))

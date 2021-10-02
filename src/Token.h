@@ -65,11 +65,11 @@ namespace MiniCalculator
         /// <summary>
         /// 起始位置
         /// </summary>
-        unsigned int Start;
+        size_t Start;
         /// <summary>
         /// 结束位置
         /// </summary>
-        unsigned int End;
+        size_t End;
         /// <summary>
         /// Token类型
         /// </summary>
@@ -83,7 +83,7 @@ namespace MiniCalculator
             return source.substr(Start, End - Start) + "\t (" + Utils::GetTypeString(Type) + ")";
         }
 
-        Token(TokenType type, unsigned int start, unsigned int end) :  Start(start), End(end), Type(type){}
+        Token(TokenType type, size_t start, size_t end) :  Start(start), End(end), Type(type){}
     };
 }
 

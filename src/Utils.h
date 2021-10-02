@@ -10,6 +10,7 @@ namespace MiniCalculator
 
     enum class TokenType;
     class Expr;
+    class Polyomial;
     /// <summary>
     /// 颜色枚举
     /// </summary>
@@ -62,9 +63,9 @@ namespace MiniCalculator
         /// <summary>
         /// 输出表达式
         /// </summary>
-        /// <param name="expr">表达式</param>
+        /// <param name="poly">多项式</param>
         /// <param name="input">输入</param>
-        static void PrintExpr(std::shared_ptr<Expr> expr, std::string& input);
+        static void PrintExpr(Polyomial& poly, std::string& input);
         /// <summary>
         /// 异常处理
         /// </summary>

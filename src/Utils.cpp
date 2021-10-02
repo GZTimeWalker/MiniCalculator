@@ -154,13 +154,13 @@ namespace MiniCalculator
         std::cout << msg << std::endl;
     }
 
-    void Utils::PrintExpr(std::shared_ptr<Expr> expr, std::string& input)
+    void Utils::PrintExpr(Polyomial& poly, std::string& input)
     {
         Print(" | ", Color::YELLOW);
         Print(input, Color::WHITE);
         Print(" = ", Color::CYAN);
         SetColor(Color::WHITE);
-        std::cout << expr->Eval() << std::endl;
+        std::cout << poly << std::endl;
     }
 
     void Utils::PrintException(Exception e, std::string source)
@@ -168,14 +168,14 @@ namespace MiniCalculator
         PrintLine("An exception has occurred!", Color::RED);
         PrintLine(e.descr, Color::YELLOW);
 
-        unsigned int pos = e.pos;
-        unsigned int rpos = e.pos;
-        unsigned int begin = 0;
-        unsigned int end = source.length();
+        size_t pos = e.pos;
+        size_t rpos = e.pos;
+        size_t begin = 0;
+        size_t end = source.length();
 
         std::string msg = " > ";
 
-        if (e.pos < 0)
+        if (e.type < 0)
             pos = end;
 
         if (pos - 15 < end)
@@ -200,13 +200,13 @@ namespace MiniCalculator
 
         msg.clear();
 
-        if (e.pos == -2)
+        if (e.type == -2)
         {
             PrintLine("\n", Color::WHITE);
             return;
         }
 
-        if (e.pos == -1)
+        if (e.type == -1)
             rpos = source.length();
 
         msg += " At   ";

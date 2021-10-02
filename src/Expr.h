@@ -198,6 +198,7 @@ namespace MiniCalculator
         int Exponent;
     public:
         MonomialExpr(long double factor, int exponent) : Factor(factor), Exponent(exponent) {}
+        MonomialExpr(long double factor, long double exponent);
         /// <summary>
         /// 计算表达式
         /// </summary>

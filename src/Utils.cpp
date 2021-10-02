@@ -165,17 +165,23 @@ namespace MiniCalculator
 
     void Utils::PrintException(Exception e, std::string source)
     {
-        PrintLine("An exception has occurred!", Color::RED);
-        PrintLine(e.descr, Color::YELLOW);
+        PrintLine("[!] An exception has occurred!", Color::RED);
+        PrintLine("[*] " + e.descr, Color::YELLOW);
+
+        if (e.type == -2)
+        {
+            PrintLine("", Color::WHITE);
+            return;
+        }
 
         size_t pos = e.pos;
         size_t rpos = e.pos;
         size_t begin = 0;
         size_t end = source.length();
 
-        std::string msg = " > ";
+        std::string msg = "[*] > ";
 
-        if (e.type < 0)
+        if (e.type == -1)
             pos = end;
 
         if (pos - 15 < end)
@@ -200,16 +206,10 @@ namespace MiniCalculator
 
         msg.clear();
 
-        if (e.type == -2)
-        {
-            PrintLine("\n", Color::WHITE);
-            return;
-        }
-
         if (e.type == -1)
             rpos = source.length();
 
-        msg += " At   ";
+        msg += "[*] At   ";
         for (unsigned int i = 0; i < rpos; ++i)
             msg += " ";
         msg += "^ Here";

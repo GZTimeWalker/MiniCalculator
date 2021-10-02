@@ -69,7 +69,7 @@ namespace MiniCalculator
             Match(TokenType::RIGHT_PAREN);
             return std::make_shared<GroupingExpr>(expr);
         }
-        // ax^(b)
+        // ax^( Expr )
         else if (Peek(TokenType::NUMBER, TokenType::X, TokenType::TIP, TokenType::LEFT_PAREN))
         {
             auto token = Match(TokenType::NUMBER);
@@ -100,7 +100,7 @@ namespace MiniCalculator
 
             return std::make_shared<MonomialExpr>(factor, exp);
         }
-        // x^(b)
+        // x^( Expr )
         else if (Peek(TokenType::X, TokenType::TIP, TokenType::LEFT_PAREN))
         {
             Match(TokenType::X);

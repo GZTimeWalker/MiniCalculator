@@ -28,7 +28,7 @@ namespace MiniCalculator
         std::string descr;
 
     public:
-        Exception(std::string descr, size_t pos, int type = 0) : descr(descr), pos(pos){}
+        Exception(std::string descr, size_t pos, int type = 0) : descr(descr), pos(pos), type(type) {}
 
         friend std::ostream& operator<<(std::ostream& out, const Exception& e)
         {

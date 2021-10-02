@@ -63,6 +63,16 @@ namespace MiniCalculator
         }
     }
 
+    MonomialExpr::MonomialExpr(long double factor, long double exponent)
+    {
+        long double exp = 0;
+        if (modfl(exponent, &exp) > 0.0L)
+            throw UnsupportedOperationException();
+
+        Factor = factor;
+        Exponent = (int)exp;
+    }
+
     Polyomial MonomialExpr::Eval()
     {
         map<int, long double> expfactors;
@@ -116,7 +126,7 @@ namespace MiniCalculator
             _right = right.AsNum();
             return left / _right;
         case TokenType::TIP:
-            if (modfl(right.AsNum(), &_right) != 0.0)
+            if (modfl(right.AsNum(), &_right) > 0.0L)
                 throw UnsupportedOperationException();
             return left ^ (int)_right;
         default:
@@ -165,7 +175,7 @@ namespace MiniCalculator
             _right = right.AsNum();
             return left / _right;
         case TokenType::TIP:
-            if (modfl(right.AsNum(), &_right) != 0.0)
+            if (modfl(right.AsNum(), &_right) > 0.0L)
                 throw UnsupportedOperationException();
             return left ^ (int)_right;
         default:

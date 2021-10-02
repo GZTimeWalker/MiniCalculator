@@ -123,6 +123,9 @@ namespace MiniCalculator {
 
     Polyomial& Polyomial::operator^=(int exp)
     {
+        if (exp < 0)
+            throw UnsupportedOperationException();
+
         if (exp == 1)
             return *this;
 

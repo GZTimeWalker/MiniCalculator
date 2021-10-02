@@ -4,6 +4,9 @@
 
 namespace MiniCalculator
 {
+    bool Utils::DEBUG = false;
+    int Utils::DEPTH = 0;
+
     void Utils::SetColor(Color color)
     {
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (int)color);
@@ -152,6 +155,51 @@ namespace MiniCalculator
     {
         SetColor(color);
         std::cout << msg << std::endl;
+    }
+
+    void Utils::PrintDebugLine(bool in, std::string name)
+    {
+        if (in)
+        {
+            for (int i = 0; i < DEPTH++; ++i)
+                std::cout << "  ";
+            Print(">> ", Color::GREEN);
+            Print("Enter ", Color::WHITE);
+        }
+        else
+        {
+            for (int i = 0; i < --DEPTH; ++i)
+                std::cout << "  ";
+            Print("<< ", Color::RED);
+            Print("Leave ", Color::WHITE);
+        }
+        PrintLine(name);
+    }
+
+    void Utils::PrintDebugExpr(Polyomial poly)
+    {
+        for (int i = 0; i < DEPTH; ++i)
+            std::cout << "  ";
+        Print("[*] ", Color::YELLOW);
+        Print("expr", Color::WHITE);
+        Print(" = ", Color::CYAN);
+        SetColor(Color::WHITE);
+        std::cout << poly << std::endl;
+    }
+
+    void Utils::PrintDebugExprWithToken(Polyomial poly, TokenType type)
+    {
+        for (int i = 0; i < DEPTH; ++i)
+            std::cout << "  ";
+        Print("[*] ", Color::YELLOW);
+        Print("expr", Color::WHITE);
+        Print(" = ", Color::CYAN);
+        SetColor(Color::WHITE);
+        std::cout << poly << std::endl;
+        for (int i = 0; i < DEPTH; ++i)
+            std::cout << "  ";
+        Print("[*] ", Color::YELLOW);
+        PrintLine("Match " + GetTypeString(type));
     }
 
     void Utils::PrintExpr(Polyomial& poly, std::string& input)

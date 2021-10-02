@@ -181,72 +181,118 @@ namespace MiniCalculator
 
     std::shared_ptr<Expr> Parser::GetDerivativeExpr()
     {
+        if (Utils::DEBUG)
+        {
+            Utils::PrintDebugLine(true, "Derivative Expr");
+            Utils::PrintDebugLine(true, "Base Expr");
+        }
         auto ret = GetBaseExpr();
+        if (Utils::DEBUG)
+        {
+            Utils::PrintDebugExpr(ret->Eval());
+            Utils::PrintDebugLine(false, "Base Expr");
+        }
         while (Peek(TokenType::RSQUO))
         {
             Token _operator = Match();
+            if (Utils::DEBUG)
+                Utils::PrintDebugExprWithToken(ret->Eval(), _operator.Type);
             ret = std::make_shared<DerivativeExpr>(ret);
         }
+        if (Utils::DEBUG)
+            Utils::PrintDebugLine(false, "Derivative Expr");
         return ret;
     }
 
     std::shared_ptr<Expr> Parser::GetUnaryExpr()
     {
-        Token op = Token(TokenType::NONE, 0, 0);
-        bool after = true;
+        if (Utils::DEBUG)
+            Utils::PrintDebugLine(true, "Unary Expr");
+        Token _operator = Token(TokenType::NONE, 0, 0);
 
         if (Peek(TokenType::MINUS))
-            op = Match(TokenType::MINUS);
+            _operator = Match(TokenType::MINUS);
         else if (Peek(TokenType::PLUS))
-            op = Match(TokenType::PLUS);
+            _operator = Match(TokenType::PLUS);
 
         auto expr = GetDerivativeExpr();
 
-        if (op.Type == TokenType::NONE)
+
+
+        if (_operator.Type == TokenType::NONE)
+        {
+            if (Utils::DEBUG)
+                Utils::PrintDebugLine(false, "Unary Expr");
             return expr;
+        }
         
-        return std::make_shared<UnaryExpr>(op, expr);
+        if (Utils::DEBUG)
+        {
+            Utils::PrintDebugExprWithToken(expr->Eval(), _operator.Type); 
+            Utils::PrintDebugLine(false, "Unary Expr");
+        }
+
+        return std::make_shared<UnaryExpr>(_operator, expr);
     }
 
     std::shared_ptr<Expr> Parser::GetPowExpr()
     {
+        if (Utils::DEBUG)
+            Utils::PrintDebugLine(true, "Pow Expr");
         auto ret = GetUnaryExpr();
         while (Peek(TokenType::TIP))
         {
             Token _operator = Match();
+            if (Utils::DEBUG)
+                Utils::PrintDebugExprWithToken(ret->Eval(), _operator.Type);
             ret = std::make_shared<BinaryExpr>(ret, _operator, GetUnaryExpr());
         }
+        if (Utils::DEBUG)
+            Utils::PrintDebugLine(false, "Pow Expr");
         return ret;
     }
 
     std::shared_ptr<Expr> Parser::GetMutiExpr()
     {
+        if (Utils::DEBUG)
+            Utils::PrintDebugLine(true, "Muti Expr");
         auto ret = GetPowExpr();
         while (Peek(TokenType::STAR) || Peek(TokenType::SLASH) || Peek(TokenType::LEFT_PAREN))
         {
             if (Peek(TokenType::LEFT_PAREN))
             {
                 Token _operator = Token(TokenType::STAR, 0, 0);
+                if (Utils::DEBUG)
+                    Utils::PrintDebugExprWithToken(ret->Eval(), _operator.Type);
                 ret = std::make_shared<BinaryExpr>(ret, _operator, GetPowExpr());
             }
             else
             {
                 Token _operator = Match();
+                if (Utils::DEBUG)
+                    Utils::PrintDebugExprWithToken(ret->Eval(), _operator.Type);
                 ret = std::make_shared<BinaryExpr>(ret, _operator, GetPowExpr());
             }
         }
+        if (Utils::DEBUG)
+            Utils::PrintDebugLine(false, "Muti Expr");
         return ret;
     }
 
     std::shared_ptr<Expr> Parser::GetPlusExpr()
     {
-
+        if (Utils::DEBUG)
+            Utils::PrintDebugLine(true, "Plus Expr");
         auto ret = GetMutiExpr();
         while (Peek(TokenType::PLUS) || Peek(TokenType::MINUS))
         {
             Token _operator = Match();
+            if (Utils::DEBUG)
+                Utils::PrintDebugExprWithToken(ret->Eval(), _operator.Type);
             ret = std::make_shared<BinaryExpr>(ret, _operator, GetMutiExpr());
         }
+        if (Utils::DEBUG)
+            Utils::PrintDebugLine(false, "Plus Expr");
         return ret;
     }
 

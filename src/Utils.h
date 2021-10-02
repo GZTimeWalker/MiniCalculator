@@ -48,6 +48,9 @@ namespace MiniCalculator
         /// <param name="color">颜色枚举值</param>
         static void SetColor(Color color);
 
+        static bool DEBUG;
+        static int DEPTH;
+
         static void Init();
         static std::string GetTypeString(TokenType type);
 
@@ -60,12 +63,26 @@ namespace MiniCalculator
         static void PrintLine(const char* msg);
         static void PrintLine(std::string msg, Color color);
 
+        static void PrintDebugLine(bool in, std::string name);
+
         /// <summary>
         /// 输出表达式
         /// </summary>
         /// <param name="poly">多项式</param>
         /// <param name="input">输入</param>
         static void PrintExpr(Polyomial& poly, std::string& input);
+        /// <summary>
+        /// 输出表达式
+        /// </summary>
+        /// <param name="poly">多项式</param>
+        /// <param name="token">运算符</param>
+        static void PrintDebugExpr(Polyomial poly);
+        /// <summary>
+        /// 输出表达式
+        /// </summary>
+        /// <param name="poly">多项式</param>
+        /// <param name="token">运算符</param>
+        static void PrintDebugExprWithToken(Polyomial poly, TokenType type);
         /// <summary>
         /// 异常处理
         /// </summary>
@@ -79,4 +96,5 @@ namespace MiniCalculator
         /// <returns>是否可用</returns>
         static bool CheckName(std::string var);
     };
+
 }

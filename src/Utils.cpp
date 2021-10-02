@@ -28,7 +28,7 @@ namespace MiniCalculator
         };
         for (auto& str : strs)
             PrintLine(str);
-        PrintLine("\n                                By GZTime Version 2.1                                   ", Color::B_CYAN);
+        PrintLine("\n                                By GZTime Version 2.2                                   ", Color::B_CYAN);
         PrintLine("\n  Type 'help' for help.\n", Color::WHITE);
     }
 
@@ -77,8 +77,8 @@ namespace MiniCalculator
 
     void Utils::PrintHelp()
     {
-        PrintLine("\nMiniCalculator Version 2.1", Color::YELLOW);
-        PrintLine("\n   By GZTime 2021.09.27\n");
+        PrintLine("\nMiniCalculator Version 2.2", Color::YELLOW);
+        PrintLine("\n   By GZTime 2021.10.02\n");
         
         SetColor(Color::WHITE);
         const char* strs[] = {

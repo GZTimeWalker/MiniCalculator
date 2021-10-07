@@ -233,7 +233,10 @@ namespace MiniCalculator
         std::string msg;
 
         if (e.type == -1)
+        {
+            rpos = end;
             pos = end;
+        }
 
         if (pos - 15 < end)
         {

@@ -215,9 +215,7 @@ namespace MiniCalculator
         else if (Peek(TokenType::PLUS))
             _operator = Match(TokenType::PLUS);
 
-        auto expr = GetDerivativeExpr();
-
-
+        auto expr = GetPowExpr();
 
         if (_operator.Type == TokenType::NONE)
         {
@@ -239,13 +237,13 @@ namespace MiniCalculator
     {
         if (Utils::DEBUG)
             Utils::PrintDebugLine(true, "Pow Expr");
-        auto ret = GetUnaryExpr();
+        auto ret = GetDerivativeExpr();
         while (Peek(TokenType::TIP))
         {
             Token _operator = Match();
             if (Utils::DEBUG)
                 Utils::PrintDebugExprWithToken(ret->Eval(), _operator.Type);
-            ret = std::make_shared<BinaryExpr>(ret, _operator, GetUnaryExpr());
+            ret = std::make_shared<BinaryExpr>(ret, _operator, GetDerivativeExpr());
         }
         if (Utils::DEBUG)
             Utils::PrintDebugLine(false, "Pow Expr");
@@ -256,7 +254,7 @@ namespace MiniCalculator
     {
         if (Utils::DEBUG)
             Utils::PrintDebugLine(true, "Muti Expr");
-        auto ret = GetPowExpr();
+        auto ret = GetUnaryExpr();
         while (Peek(TokenType::STAR) || Peek(TokenType::SLASH) || Peek(TokenType::LEFT_PAREN))
         {
             if (Peek(TokenType::LEFT_PAREN))
@@ -264,14 +262,14 @@ namespace MiniCalculator
                 Token _operator = Token(TokenType::STAR, 0, 0);
                 if (Utils::DEBUG)
                     Utils::PrintDebugExprWithToken(ret->Eval(), _operator.Type);
-                ret = std::make_shared<BinaryExpr>(ret, _operator, GetPowExpr());
+                ret = std::make_shared<BinaryExpr>(ret, _operator, GetUnaryExpr());
             }
             else
             {
                 Token _operator = Match();
                 if (Utils::DEBUG)
                     Utils::PrintDebugExprWithToken(ret->Eval(), _operator.Type);
-                ret = std::make_shared<BinaryExpr>(ret, _operator, GetPowExpr());
+                ret = std::make_shared<BinaryExpr>(ret, _operator, GetUnaryExpr());
             }
         }
         if (Utils::DEBUG)
